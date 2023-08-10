@@ -1,0 +1,71 @@
+[
+	{
+		"title": "Moneda Emoji",
+		"description": "Chocolate individual",
+		"price": 80,
+		"code": "Fel0020",
+		"stock": 300,
+		"category": "Chocolates",
+		"id": 1
+	},
+	{
+		"title": "Monedas Pirata",
+		"description": "monedas de chocolate",
+		"price": 150,
+		"thumbnail": "Sin imagen",
+		"category": "Chocolates",
+		"code": "Fel001",
+		"stock": 120,
+		"id": 2
+	},
+	{
+		"title": "Kooky",
+		"description": "monedas de chocolate",
+		"price": 250,
+		"thumbnail": "Sin imagen",
+		"category": "Chocolates",
+		"code": "Fel005",
+		"stock": 220,
+		"id": 3
+	},
+	{
+		"title": "Kooky",
+		"description": "monedas de chocolate",
+		"price": 250,
+		"thumbnail": "Sin imagen",
+		"category": "Chocolates",
+		"code": "Fel006",
+		"stock": 220,
+		"id": 4
+	},
+	{
+		"title": "Kooky",
+		"description": "monedas de chocolate",
+		"price": 250,
+		"thumbnail": "Sin imagen",
+		"category": "Chocolates",
+		"code": "Fel007",
+		"stock": 220,
+		"id": 5
+	},
+	{
+		"title": "Kooky",
+		"description": "monedas de chocolate",
+		"price": 250,
+		"thumbnail": "Sin imagen",
+		"category": "Chocolates",
+		"code": "Fel008",
+		"stock": 220,
+		"id": 6
+	},
+	{
+		"title": "Kooky",
+		"description": "monedas de chocolate",
+		"price": 250,
+		"thumbnail": "Sin imagen",
+		"category": "Chocolates",
+		"code": "Fel010",
+		"stock": 220,
+		"id": 8
+	}
+]
