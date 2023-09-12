@@ -28,7 +28,7 @@ addCart.forEach((btn) => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        productId: id,
+        product: id,
       }),
     });
     console.log(response);

@@ -9,7 +9,6 @@ router.get("/", async (req, res) => {
   try {
     const { page = 1, limit = 10 } = req.query;
     const paginationResult = await productsService.getProducts(page, limit);
-
     const products = paginationResult.docs;
     const currentPage = paginationResult.page;
     const { hasPrevPage, hasNextPage, prevPage, nextPage } = paginationResult;
