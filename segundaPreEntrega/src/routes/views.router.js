@@ -1,7 +1,9 @@
 import { Router } from "express";
 import ProductsManager from "../dao/managers/productManager.js";
+import CartsManager from "../dao/managers/cartManager.js";
 const router = Router();
 const productsService = new ProductsManager();
+const cartsService = new CartsManager();
 
 router.get("/", async (req, res) => {
   try {
@@ -23,6 +25,14 @@ router.get("/", async (req, res) => {
   } catch (error) {
     res.json({ error: error });
   }
+});
+
+router.get("/cart", async (req, res) => {
+  const cart = await cartsService.getCart();
+  const products = cart.products;
+  res.render("cart", {
+    products,
+  });
 });
 
 export default router;

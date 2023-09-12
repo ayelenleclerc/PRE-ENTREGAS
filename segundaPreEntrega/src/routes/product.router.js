@@ -93,6 +93,12 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.post("/filter", async (req, res) => {
+  const category = req.body.category;
+  const products = await productsService.getProductsByCategory(category);
+  res.send({ status: "success", payload: products });
+});
+
 router.put("/:pid", async (req, res) => {
   try {
     const id = req.params.pid;

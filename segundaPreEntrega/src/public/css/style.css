@@ -7,13 +7,13 @@
 
 .title {
   font-family: "Borel", cursive;
-  font-size: 3rem;
+  font-size: 2rem;
   text-align: center;
   margin: 20px;
 }
 .subtitle {
   font-family: "Borel", cursive;
-  font-size: 28px;
+  font-size: 20px;
   text-align: center;
   margin: 5px;
 }
@@ -30,11 +30,14 @@
   box-shadow: 0 2px 12px 6px rgba(0, 0, 0, 0.2);
 }
 .label {
-  font-size: 20px;
+  width: 323px;
+  text-align: start;
+  font-size: 16px;
 }
 
 .controls {
-  font-size: 20px;
+  width: 100%;
+  font-size: 16px;
   margin: 5px;
   border-radius: 5px;
   border: none;
@@ -64,7 +67,7 @@
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 95%;
+  width: 100%;
   margin: 20px;
   flex-direction: row;
   flex-wrap: wrap;
@@ -74,30 +77,46 @@
 .card {
   display: flex;
   width: 200px;
-  height: 300px;
+  height: 400px;
   border-radius: 15px;
-  margin: 5px 15px;
+  margin: 10px;
   box-shadow: 0 2px 12px 6px rgba(0, 0, 0, 0.2);
   flex-direction: row;
   flex-wrap: wrap;
-  align-content: center;
-  justify-content: center;
+  align-content: space-between;
   align-items: center;
+  justify-content: center;
 }
+
 .card-img {
-  width: 150px;
-  padding: 0.5rem;
+  width: auto;
+  padding: 5px;
+  max-height: 150px;
 }
 
 .card-body {
+  display: flex;
   width: 200px;
   padding: 5px;
   text-align: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: space-around;
+  justify-content: center;
+  align-items: center;
+  height: 340px;
 }
 .card-info {
+  display: flex;
   width: 100%;
   padding: 5px;
   text-align: left;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 5px aut;
 }
 .card-title {
   text-align: center;
@@ -106,4 +125,48 @@
 
 .card-text {
   font-size: 14px;
+}
+
+.code {
+  font-size: 10px;
+}
+
+.btn-AddCart {
+  display: flex;
+  width: 150px;
+  background-color: aquamarine;
+  font-family: "Borel", cursive;
+  text-align: center;
+  padding: 5px auto;
+  font-size: 12px;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.btnPag {
+  width: 150px;
+  background-color: rgb(213, 154, 239);
+  font-family: "Borel", cursive;
+  text-align: center;
+  padding: 5px auto;
+  font-size: 16px;
+}
+.pagination {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagNumber {
+  width: 150px;
+  font-family: "Borel", cursive;
+  text-align: center;
+
+  font-size: 16px;
 }

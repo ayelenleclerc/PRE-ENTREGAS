@@ -79,8 +79,42 @@
   />
   <button class="btn btn-delete" id="delete-btn" type="button">Eliminar</button>
 </form>
-
-<div class="container">
+{{! <div>
+  <h2 class="subtitle">Lista de productos</h2>
+  <form action="./api/products/filter" method="POST">
+    <label for="category">Elija una Categoría</label>
+    <select name="category" id="category">
+      <option value="" selected disabled>Seleccione una categoría</option>
+      <option value="">Todos</option>
+      <option value="Akapol">Akapol</option>
+      <option value="Benevia">Benevia</option>
+      <option value="Bonafide">Bonafide</option>
+      <option value="Felfort">Felfort</option>
+      <option value="Ferrero">Ferrero</option>
+      <option value="Fun Candy">Fun Candy</option>
+      <option value="Gillete">Gillete</option>
+      <option value="Jorgito">Jorgito</option>
+      <option value="Kinder">Kinder</option>
+      <option value="MC">Molinos Cañuelas</option>
+      <option value="MR">Molinos Rio de la Plata</option>
+      <option value="Nutella">Nutella</option>
+      <option value="Preservativos">Preservativos</option>
+      <option value="Sedal">Sedal</option>
+      <option value="Sarandi">Tabacalera Sarandi</option>
+      <option value="TicTac">TicTac</option>
+      <option value="Valente">Valente</option>
+      <option value="Varios">Varios</option>
+    </select>
+  </form>
+  <label for="orden">Ordenar por</label>
+  <select name="orden" id="orden">
+    <option value="asc">A-Z</option>
+    <option value="desc">Z-A</option>
+    <option value="price-desc">Precio: mayor a menor</option>
+    <option value="price-asc">Precio: menor a mayor</option>
+  </select>
+</div> }}
+<div class="container" id="container">
 
   {{#each products}}
     <div class="card" id={{this.id}}>
@@ -90,25 +124,31 @@
         <div class="card-info">
           <p class="card-text">{{this.description}}</p>
           <p class="card-text">Categoría: {{this.category}}</p>
-          <p class="card-text">Código: {{this.code}}</p>
           <p class="card-text">Stock: {{this.stock}}</p>
           <p class="card-text">Precio: ${{this.price}}</p>
+          <p class="card-text code">Código: {{this.code}}</p>
         </div>
+      </div>
+      <div>
+        <button class="btn btn-AddCart" type="button">Añadir al carrito</button>
       </div>
     </div>
   {{/each}}
 </div>
 <div class="pagination">
   {{#if hasPrevPage}}
-    <a href="/?page={{prevPage}}"><button>Anterior</button></a>
+    <a href="/?page={{prevPage}}"><button
+        class="btn btnPag"
+      >Anterior</button></a>
   {{/if}}
 
-  <h5>{{page}}</h5>
+  <h5 class="pagNumber">{{page}}-{{totalPages}}</h5>
 
   {{#if hasNextPage}}
-    <a href="/?page={{nextPage}}"><button>Siguiente</button></a>
+    <a href="/?page={{nextPage}}"><button
+        class="btn btnPag"
+      >Siguiente</button></a>
   {{/if}}
 </div>
-<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="/socket.io/socket.io.js"></script>
-<script src="./js/realTimeProducts.js"></script>
+
+<script src="./js/home.js"></script>

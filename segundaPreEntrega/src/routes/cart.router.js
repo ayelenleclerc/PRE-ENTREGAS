@@ -25,13 +25,8 @@ router.get("/:cid", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  try {
-    const cartData = req.body;
-    const cart = await cartsService.createCart(cartData);
-    res.send({ status: "success", payload: cart });
-  } catch (error) {
-    res.status(400).send({ status: "error", message: error.message });
-  }
+  const { products } = req.body;
+  res.send({ status: "success", payload: products });
 });
 
 router.post("/:cid/product/:pid", async (req, res) => {
