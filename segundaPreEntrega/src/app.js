@@ -15,12 +15,12 @@ import cookieParser from "cookie-parser";
 
 //Creo el servidor
 
-const puerto = 8080;
+const PORT = process.env.PORT || 8080;
 
 const app = express();
 
-const httpServer = app.listen(puerto, async () => {
-  console.log(`servidor conectado al puerto ${puerto}`);
+const httpServer = app.listen(PORT, async () => {
+  console.log(`servidor conectado al puerto ${PORT}`);
 });
 const socketServer = new Server(httpServer);
 
@@ -44,7 +44,7 @@ app.use("/", viewsRouter);
 app.use("/api", productRouter);
 app.use("/api", cartRouter);
 app.use("/", messageRouter);
-app.use(cookieParser);
+app.use(cookieParser("c0d3rS3cr3t"));
 
 // instancio la clase para poder enviar a todos los clientes los productos
 
