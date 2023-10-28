@@ -46,11 +46,13 @@ const deleteProduct = async (req, res) => {
   const id = parseInt(req.params.pid);
   const product = await productsService.deleteProduct(id);
   if (product === `Can't find product with id : ${id}`) {
-    res.status(400).json({ message: "Error al eliminar el producto", product });
+    return res
+      .status(400)
+      .json({ message: "Error al eliminar el producto", product });
   } else if (product) {
-    res.status(200).json({ message: "Producto eliminado", product });
+    return res.status(200).json({ message: "Producto eliminado", product });
   } else {
-    res.status(400).json({ message: "Error al eliminar el producto" });
+    return res.status(400).json({ message: "Error al eliminar el producto" });
   }
 };
 

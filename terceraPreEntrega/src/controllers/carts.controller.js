@@ -1,10 +1,13 @@
 import { cartsService, productsService } from "../services/index.js";
 
-const getCarts = async (req, res) => {};
+const getCarts = async (req, res) => {
+  const carts = await cartsService.getCarts();
+  return res.send({ status: "success", payload: carts });
+};
 
 const getCartById = async (req, res) => {
   const { cid } = req.params;
-  const cart = await cartsService.findOne({ _id: cid });
+  const cart = await cartsService.getCartById({ _id: cid });
   if (!cart)
     return res.status(404).send({ status: "error", message: "Cart not found" });
   res.send({ status: "success", payload: cart });
@@ -15,10 +18,10 @@ const createCart = async (req, res) => {
 };
 const updateCart = async (req, res) => {
   const { cid, pid } = req.params;
-  const cart = await cartsService.findOne({ _id: cid });
+  const cart = await cartsService.getCartById({ _id: cid });
   if (!cart)
     return res.status(400).send({ status: "error", message: "Cart not found" });
-  const product = await productsService.getProductBy({ _id: pid });
+  const product = await productsService.getProductBy({ pid: pid });
   if (!product)
     return res
       .status(400)
@@ -37,9 +40,54 @@ const updateCart = async (req, res) => {
   });
   res.send({ status: "success", payload: cart });
 };
+const updateCartUser = async (req, res) => {
+  const { pid } = req.params;
+  const cart = await cartsService.getCartById({ _id: req.user.cart });
+  if (!cart) {
+    return res.status(400).send({ status: "error", message: "Cart not found" });
+  }
+  const product = await productsService.getProductBy({ _id: pid });
+  if (!product)
+    return res
+      .status(400)
+      .send({ status: "error", message: "Product not found" });
+  const productExistsInCart = cart.products.find((item) => {
+    return item.product.toString() === pid;
+  });
+  if (productExistsInCart) {
+    // Verificar si hay suficiente stock para restar
+    if (product.stock > productExistsInCart.quantity) {
+      productExistsInCart.quantity += 1;
+      // Restar del stock del producto
+      product.stock -= 1;
+    } else {
+      return res
+        .status(400)
+        .send({ status: "error", message: "Not enough stock available." });
+    }
+  } else {
+    // Si el producto no está en el carrito, agrégalo con una cantidad de 1
+    if (product.stock > 0) {
+      cart.products.push({ product: pid, quantity: 1 });
+      // Restar del stock del producto
+      product.stock -= 1;
+    } else {
+      return res
+        .status(400)
+        .send({ status: "error", message: "Product out of stock." });
+    }
+  }
+
+  await cartsService.updateCart(req.user.cart, {
+    products: cart.products,
+    quantity: cart.quantity,
+  });
+
+  res.send({ status: "success", message: "Cart updated successfully" });
+};
 const deleteCart = async (req, res) => {
   const { cid } = req.params;
-  const cart = await cartsService.findOne({ _id: cid });
+  const cart = await cartsService.deleteCart({ _id: cid });
   if (!cart)
     return res.status(400).send({ status: "error", message: "Cart not found" });
   await cartsService.deleteCart(cid);
@@ -51,5 +99,6 @@ export default {
   getCartById,
   createCart,
   updateCart,
+  updateCartUser,
   deleteCart,
 };

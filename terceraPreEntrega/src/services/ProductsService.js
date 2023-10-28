@@ -2,22 +2,22 @@ export default class ProductsService {
   constructor(manager) {
     this.manager = manager;
   }
-  getProducts = () => {
+  getProducts = (params) => {
     return this.manager.getProducts(params);
   };
   paginateProducts = () => {
     return this.manager.paginateProducts(params, paginateOptions);
   };
-  getProductBy = () => {
+  getProductBy = (params) => {
     return this.manager.getProductBy(params);
   };
-  createProduct = () => {
+  createProduct = (product) => {
     return this.manager.createProduct(product);
   };
-  updateProduct = () => {
+  updateProduct = (id, product) => {
     return this.manager.updateProduct(id, product);
   };
-  deleteProduct = () => {
+  deleteProduct = (id) => {
     return this.manager.deleteProduct(id);
   };
 }

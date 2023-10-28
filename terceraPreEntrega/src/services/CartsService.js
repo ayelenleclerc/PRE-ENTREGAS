@@ -2,17 +2,14 @@ export default class CartsService {
   constructor(manager) {
     this.manager = manager;
   }
-  getCart = () => {
-    return this.manager.getCart(params);
-  };
 
-  getCartById = () => {
-    return this.manager.getCartById(params, (options = {}));
+  getCartById = (cid) => {
+    return this.manager.getCartById(cid);
   };
   createCart = () => {
     return this.manager.createCart();
   };
-  updateCart = () => {
+  updateCart = (id, cart) => {
     return this.manager.updateCart(id, cart);
   };
   deleteCart = () => {

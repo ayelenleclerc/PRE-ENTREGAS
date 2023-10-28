@@ -7,11 +7,15 @@ class CartRouter extends BaseRouter {
 
     // this.get("/:cid/purchase", ["USER"], cartsController.getCartById);
 
-    this.post("/", ["ADMIN"], cartsController.createCart);
+    this.post("/", ["USER"], cartsController.createCart);
 
     this.put(":cid/products/:pid", ["NO_AUTH"], cartsController.updateCart);
 
-    this.put("/products/:pid", ["USER"], cartsController.updateCart);
+    this.put(
+      "/products/:pid",
+      ["USER", "ADMIN"],
+      cartsController.updateCartUser
+    );
 
     this.delete("/:cid", ["ADMIN"], cartsController.deleteCart);
   }

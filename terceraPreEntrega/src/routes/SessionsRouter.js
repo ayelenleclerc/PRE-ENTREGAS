@@ -41,7 +41,6 @@ class SessionsRouter extends BaseRouter {
     });
 
     this.get("/current", ["AUTH"], async (req, res) => {
-      console.log(req.user);
       res.sendSuccessWithPayload(req.user);
     });
   }

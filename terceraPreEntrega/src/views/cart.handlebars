@@ -1,8 +1,26 @@
-<h2>Carrito</h2>
-
 <div class="container">
-  {{#each products}}
-    <p>{{this.product}}</p>
-    <p>{{this.quantity}}</p>
-  {{/each}}
+  <h1 class="title">Carrito de compras</h1>
 </div>
+
+<div>
+  <table class="table">
+    <thead>
+      <tr>Nombre</tr>
+      <tr>Descripción</tr>
+      <tr>Categoría</tr>
+      <tr>Stock</tr>
+      <tr>Precio</tr>
+      <tr>Cantidad</tr>
+      <tr>Total</tr>
+    </thead>
+    <tbody id="cartContainer">
+
+    </tbody>
+  </table>
+
+</div>
+<div>
+  <p>Total: ${{total}}</p>
+</div>
+
+<script src="/js/cart.js"></script>
