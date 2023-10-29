@@ -5,7 +5,6 @@ const response = async () => {
   if (cart) {
     const response = await fetch(`/api/carts/${cid}`, { method: "GET" });
     const result = await response.json();
-    console.log(result);
   } else {
     //si no encontro la cookie, es porque ya hay un usuario logueado
     const response = await fetch(`/api/sessions/current`, { method: "GET" });
@@ -20,9 +19,7 @@ const response = async () => {
                               <td>${product.product.description}</td>
                               <td>${product.product.category}</td>
                               <td>$ ${product.product.price}</td>
-                              <td>${
-                                product.product.stock - product.quantity
-                              }</td>
+                              <td>${product.product.stock}</td>
                               <td>${product.quantity}</td>
                               <td>$ ${
                                 product.product.price * product.quantity

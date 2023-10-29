@@ -5,14 +5,12 @@ async function addProduct(id) {
       method: "PUT",
     });
     const result = await response.json();
-    console.log(result);
   } else {
     //si no encontro la cookie, es porque ya hay un usuario logueado
     const response = await fetch(`/api/carts/products/${id}`, {
       method: "PUT",
     });
     const result = await response.json();
-    console.log(result);
   }
 }
 

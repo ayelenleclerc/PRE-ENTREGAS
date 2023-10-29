@@ -34,7 +34,7 @@ class cartManager {
     // llamo la funcion para obtener los carritos y buscar por id
     try {
       const cartBuscado = await cartModel.find({ _id: id });
-      return await cartBuscado;
+      return cartBuscado;
     } catch (err) {
       console.log("Not found " + err);
       return false;

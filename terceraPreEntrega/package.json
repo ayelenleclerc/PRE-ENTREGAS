@@ -20,7 +20,7 @@
   "keywords": [],
   "license": "ISC",
   "main": "index.js",
-  "name": "clase8-primerapracticaintegradora",
+  "name": "tercera-pre-entrega",
   "scripts": {
     "dev": "nodemon src/app.js --mode dev",
     "start": "node src/app.js",
