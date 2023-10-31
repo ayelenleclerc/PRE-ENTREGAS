@@ -55,10 +55,11 @@ const updateCartUser = async (req, res) => {
     return item.product.toString() === pid;
   });
   if (productExistsInCart) {
-    // Si el producto ya estaba en el carrito, solo incrementar la cantidad en 1
-    if (productExistsInCart.stock > 0) {
-      productExistsInCart.stock -= 1;
-      cart.products.quantity += 1;
+    // Verificar si hay suficiente stock para restar
+    if (cart.product.stock > cart.quantity) {
+      cart.quantity += 1;
+      // Restar del stock del producto
+      cart.product.stock -= 1;
     } else {
       return res
         .status(400)
@@ -67,8 +68,10 @@ const updateCartUser = async (req, res) => {
   } else {
     // Si el producto no está en el carrito, agrégalo con una cantidad de 1
     if (product.stock > 0) {
+      cart.quantity += 1;
+
       cart.products.push({ product: pid, quantity: 1 });
-      product.stock -= 1;
+      // Restar del stock del producto
     } else {
       return res
         .status(400)
