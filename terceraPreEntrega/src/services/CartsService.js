@@ -12,7 +12,7 @@ export default class CartsService {
   updateCart = (id, cart) => {
     return this.manager.updateCart(id, cart);
   };
-  deleteCart = () => {
+  deleteCart = (id) => {
     return this.manager.deleteCart(id);
   };
 }

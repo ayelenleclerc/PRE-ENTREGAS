@@ -5,9 +5,10 @@ export default class ProductsService {
   getProducts = (params) => {
     return this.manager.getProducts(params);
   };
-  paginateProducts = () => {
+  paginateProducts = (params, paginateOptions) => {
     return this.manager.paginateProducts(params, paginateOptions);
   };
+
   getProductBy = (params) => {
     return this.manager.getProductBy(params);
   };
