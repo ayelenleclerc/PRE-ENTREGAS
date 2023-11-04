@@ -40,7 +40,7 @@ const initializePassportStrategies = () => {
             //Obtener el que ya esta en la cookie
             cart = req.cookies["cart"];
           } else {
-            cartResult = await cartSevice.createCart();
+            const cartResult = await cartSevice.createCart();
             cart = cartResult.id;
           }
           newUser.cart = cart;

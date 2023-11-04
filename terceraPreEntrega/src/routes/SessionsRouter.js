@@ -12,7 +12,7 @@ class SessionsRouter extends BaseRouter {
       async (req, res) => {
         res.clearCookie("cart");
         res.sendSuccess("Registered");
-        res.redirect("/profile");
+        return res.redirect("/profile");
       }
     );
     this.post(
@@ -32,16 +32,16 @@ class SessionsRouter extends BaseRouter {
         });
         res.cookie(config.jwt.COOKIE, token);
         res.clearCookie("cart");
-        res.sendSuccess("Logged In");
+        return res.sendSuccess("Logged In");
       }
     );
     this.get("/logout", ["AUTH"], async (req, res) => {
       res.clearCookie(config.jwt.COOKIE);
-      res.sendSuccess("Logged Out");
+      return res.sendSuccess("Logged Out");
     });
 
     this.get("/current", ["AUTH"], async (req, res) => {
-      res.sendSuccessWithPayload(req.user);
+      return res.sendSuccessWithPayload(req.user);
     });
   }
 }

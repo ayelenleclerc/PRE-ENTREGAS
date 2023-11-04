@@ -10,7 +10,7 @@ export default class ProductsService {
   };
 
   getProductBy = (params) => {
-    return this.manager.getProductBy(params);
+    return this.manager.getProductsBy(params);
   };
   createProduct = (product) => {
     return this.manager.createProduct(product);

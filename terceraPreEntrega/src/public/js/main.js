@@ -1,4 +1,5 @@
 const iconos = document.getElementById("iconos");
+const logout = document.getElementById("logout");
 
 const user = async () => {
   const response = await fetch("/api/sessions/current", {
@@ -27,15 +28,18 @@ const user = async () => {
                       </div>`;
   }
 
-  const logout = document.getElementById("logout");
+  if (result.payload) {
+    logout.addEventListener("click", adios);
 
-  logout.addEventListener("click", async () => {
-    const response = await fetch("/api/sessions/logout", {
-      method: "GET",
-    });
-    const result = await response.json();
-
-    window.location = "/";
-  });
+    async function adios() {
+      const response = await fetch("/api/sessions/logout", {
+        method: "GET",
+      }).then((result) => {
+        if (result.status === 200) {
+          return (window.location = "/");
+        }
+      });
+    }
+  }
 };
 user();

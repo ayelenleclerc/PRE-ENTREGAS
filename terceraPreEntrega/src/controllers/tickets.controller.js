@@ -6,7 +6,7 @@ import {
 
 const getTickets = async (req, res) => {
   const result = await ticketsService.getTickets();
-  res.send({ status: "success", payload: result });
+  return res.send({ status: "success", payload: result });
 };
 
 const getTicketById = async (req, res) => {
@@ -16,11 +16,11 @@ const getTicketById = async (req, res) => {
     return res
       .status(404)
       .send({ status: "error", message: "Ticket not found" });
-  res.send({ status: "success", payload: ticket });
+  return res.send({ status: "success", payload: ticket });
 };
 const createTicket = async (req, res) => {
   const result = await ticketsService.createTicket();
-  res.send({ status: "success", payload: result });
+  return res.send({ status: "success", payload: result });
 };
 
 export default {

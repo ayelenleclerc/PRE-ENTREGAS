@@ -57,15 +57,21 @@ export default class BaseRouter {
   }
 
   generateCustomResponses(req, res, next) {
-    res.sendSuccess = (message) => res.send({ status: "success", message });
-    res.sendSuccessWithPayload = (payload) =>
-      res.send({ status: "success", payload });
-    res.sendInternalError = (error) =>
-      res.status(500).send({ status: "error", error });
-    res.sendUnauthorized = (error) =>
-      res.status(401).send({ status: "error", error });
-    res.sendForbidden = (error) =>
-      res.status(403).send({ status: "error", error });
+    res.sendSuccess = (message) => {
+      return res.send({ status: "success", message });
+    };
+    res.sendSuccessWithPayload = (payload) => {
+      return res.send({ status: "success", payload });
+    };
+    res.sendInternalError = (error) => {
+      return res.status(500).send({ status: "error", error });
+    };
+    res.sendUnauthorized = (error) => {
+      return res.status(401).send({ status: "error", error });
+    };
+    res.sendForbidden = (error) => {
+      return res.status(403).send({ status: "error", error });
+    };
     next();
   }
 

@@ -7,7 +7,7 @@ export default class ProductManager {
   paginateProducts = (params, paginateOptions) => {
     return productModel.paginate(params, paginateOptions);
   };
-  getProductBy = (params) => {
+  getProductsBy = (params) => {
     return productModel.findOne(params).lean();
   };
   createProduct = (product) => {

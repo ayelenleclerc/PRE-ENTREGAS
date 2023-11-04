@@ -6,8 +6,8 @@ export default class CartsService {
   getCartById = (cid) => {
     return this.manager.getCartById(cid);
   };
-  createCart = () => {
-    return this.manager.createCart();
+  createCart = (cart) => {
+    return this.manager.createCart(cart);
   };
   updateCart = (id, cart) => {
     return this.manager.updateCart(id, cart);

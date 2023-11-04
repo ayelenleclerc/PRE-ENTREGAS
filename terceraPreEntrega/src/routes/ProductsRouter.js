@@ -12,6 +12,12 @@ class ProductRouter extends BaseRouter {
     this.put("/:pid", ["ADMIN"], productsController.updateProduct);
 
     this.delete("/:pid", ["ADMIN"], productsController.deleteProduct);
+
+    this.get(
+      "/mockingproducts",
+      ["PUBLIC"],
+      productsController.mockingProducts
+    );
   }
 }
 
