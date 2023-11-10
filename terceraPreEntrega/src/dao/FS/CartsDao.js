@@ -1,6 +1,6 @@
 import fs from "fs";
 
-export default class CartManager {
+export default class CartsDao {
   constructor(path) {
     this.path = path;
     this.carts = [];

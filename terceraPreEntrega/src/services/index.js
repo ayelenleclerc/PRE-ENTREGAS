@@ -4,11 +4,10 @@ import UsersRepository from "./repositories/UsersRepository.js";
 import TicketRepository from "./repositories/TicketsRepository.js";
 import ChatRepository from "./repositories/ChatRepository.js";
 
-import CartsDao from "../dao/mongo/CartsDao.js";
-import ProductsDao from "../dao/mongo/ProductsDao.js";
-import UsersDao from "../dao/mongo/UsersDao.js";
-import TicketsDao from "../dao/mongo/TicketsDao.js";
-import ChatDao from "../dao/mongo/ChatDao.js";
+import PersistenceFactory from "../dao/PersistenceFactory.js";
+
+const { CartsDao, ProductsDao, TicketsDao, UsersDao, ChatDao } =
+  PersistenceFactory.getPersistence();
 
 export const cartsService = new CartsRepository(new CartsDao());
 export const productsService = new ProductsRepository(new ProductsDao());
