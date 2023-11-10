@@ -1,6 +1,6 @@
-import ticketModel from "../models/ticket.model.js";
+import ticketModel from "./models/ticket.model.js";
 
-export default class TicketManager {
+export default class TicketsDao {
   getTickets = (params) => {
     return ticketModel.find(params).lean();
   };

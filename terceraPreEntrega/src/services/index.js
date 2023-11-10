@@ -1,15 +1,17 @@
-import CartsService from "./CartsService.js";
-import ProductsService from "./ProductsService.js";
-import UsersService from "./UsersService.js";
-import TicketService from "./TicketsService.js";
+import CartsRepository from "./repositories/CartsRepository.js";
+import ProductsRepository from "./repositories/ProductsRepository.js";
+import UsersRepository from "./repositories/UsersRepository.js";
+import TicketRepository from "./repositories/TicketsRepository.js";
+import ChatRepository from "./repositories/ChatRepository.js";
 
-import CartManager from "../dao/mongo/managers/cartManager.js";
-import ProductManager from "../dao/mongo/managers/productManager.js";
-import UserManager from "../dao/mongo/managers/userManager.js";
-import TicketManager from "../dao/mongo/managers/ticketManager.js";
+import CartsDao from "../dao/mongo/CartsDao.js";
+import ProductsDao from "../dao/mongo/ProductsDao.js";
+import UsersDao from "../dao/mongo/UsersDao.js";
+import TicketsDao from "../dao/mongo/TicketsDao.js";
+import ChatDao from "../dao/mongo/ChatDao.js";
 
-export const cartsService = new CartsService(new CartManager());
-export const productsService = new ProductsService(new ProductManager());
-
-export const ticketsService = new TicketService(new TicketManager());
-export const usersService = new UsersService(new UserManager());
+export const cartsService = new CartsRepository(new CartsDao());
+export const productsService = new ProductsRepository(new ProductsDao());
+export const ticketsService = new TicketRepository(new TicketsDao());
+export const usersService = new UsersRepository(new UsersDao());
+export const chatService = new ChatRepository(new ChatDao());

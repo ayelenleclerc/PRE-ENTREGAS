@@ -1,5 +1,6 @@
 const iconos = document.getElementById("iconos");
 const logout = document.getElementById("logout");
+const profile = document.getElementById("profile");
 
 const user = async () => {
   const response = await fetch("/api/sessions/current", {
@@ -42,4 +43,5 @@ const user = async () => {
     }
   }
 };
+profile.innerHTML = `<h3>${result.payload.name}</h3>`;
 user();

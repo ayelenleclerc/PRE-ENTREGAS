@@ -1,6 +1,6 @@
-import cartModel from "../models/cart.model.js";
+import cartModel from "./models/cart.model.js";
 
-export default class CartManager {
+export default class CartsDao {
   getCartById = async (params, options = {}) => {
     if (options.populate) {
       return cartModel.findOne(params).populate("products.product");

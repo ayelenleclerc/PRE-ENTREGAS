@@ -11,8 +11,7 @@ class SessionsRouter extends BaseRouter {
       passportCall("register", { strategyType: "LOCALS" }),
       async (req, res) => {
         res.clearCookie("cart");
-        res.sendSuccess("Registered");
-        return res.redirect("/profile");
+        return res.sendSuccess("Registered");
       }
     );
     this.post(

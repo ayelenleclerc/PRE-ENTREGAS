@@ -2,13 +2,9 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 
-import UsersManager from "../dao/mongo/managers/userManager.js";
-import CartManager from "../dao/mongo/managers/cartManager.js";
+import { usersService, cartsService } from "../services/index.js";
 import authService from "../services/authService.js";
 import config from "./config.js";
-
-const usersService = new UsersManager();
-const cartSevice = new CartManager();
 
 const initializePassportStrategies = () => {
   passport.use(
@@ -20,13 +16,13 @@ const initializePassportStrategies = () => {
           const { firstName, lastName } = req.body;
           if (!firstName || !lastName)
             return done(null, false, { message: "Incomplete values" });
-          //Corroborar que el usuario no exista.
+
           const exists = await usersService.getUserBy({ email });
           if (exists)
             return done(null, false, { message: "User already exists" });
-          //Antes de crear al usuario, necesito aplicar un hash a su contraseña
+
           const hashedPassword = await authService.createHash(password);
-          //Ahora sí creo al usuario
+
           const newUser = {
             firstName,
             lastName,
@@ -34,13 +30,11 @@ const initializePassportStrategies = () => {
             password: hashedPassword,
           };
 
-          //Revisar el carrito temporal
           let cart;
           if (req.cookies["cart"]) {
-            //Obtener el que ya esta en la cookie
             cart = req.cookies["cart"];
           } else {
-            const cartResult = await cartSevice.createCart();
+            const cartResult = await cartsService.createCart();
             cart = cartResult.id;
           }
           newUser.cart = cart;
@@ -72,11 +66,11 @@ const initializePassportStrategies = () => {
             };
             return done(null, adminUser);
           }
-          //Aquí el usuario sí debería existir, corroborar primero.
+
           const user = await usersService.getUserBy({ email });
           if (!user)
             return done(null, false, { message: "Invalid Credentials" });
-          //Ahora toca validar su contraseña, ¿es equivalente?
+
           const isValidPassword = await authService.validatePassword(
             password,
             user.password

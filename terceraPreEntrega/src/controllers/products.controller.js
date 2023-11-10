@@ -26,25 +26,25 @@ const createProduct = async (req, res) => {
     if (product === "The insert code already exists") {
       return res
         .status(400)
-        .json({ message: "Error al crear el producto", product });
+        .json({ message: "Error! product not created", product });
     } else if (product === "Complete all fields") {
       return res
         .status(400)
-        .json({ message: "Error al crear el producto", product });
+        .json({ message: "Error! product not created", product });
     } else {
-      return res.status(201).json({ message: "Producto creado", product });
+      return res.status(201).json({ message: "Product created", product });
     }
   } catch (error) {
-    throw new error("Error al crear el producto", error);
+    throw new error("Error! product not created", error);
   }
 };
 const updateProduct = async (req, res) => {
   const id = parseInt(req.params.pid);
   const product = await productsService.updateProduct(id, req.body);
   if (product) {
-    return res.status(200).json({ message: "Producto actualizado", product });
+    return res.status(200).json({ message: "Product updated", product });
   } else {
-    return res.status(400).json({ message: "Error al actualizar el producto" });
+    return res.status(400).json({ message: "Error! product not updated" });
   }
 };
 const deleteProduct = async (req, res) => {
@@ -53,11 +53,11 @@ const deleteProduct = async (req, res) => {
   if (product === `Can't find product with id : ${id}`) {
     return res
       .status(400)
-      .json({ message: "Error al eliminar el producto", product });
+      .json({ message: "Error! Product not deleted", product });
   } else if (product) {
-    return res.status(200).json({ message: "Producto eliminado", product });
+    return res.status(200).json({ message: "Product deleted", product });
   } else {
-    return res.status(400).json({ message: "Error al eliminar el producto" });
+    return res.status(400).json({ message: "Error! Product not deleted" });
   }
 };
 
