@@ -7,7 +7,7 @@ import ChatRepository from "./repositories/ChatRepository.js";
 import PersistenceFactory from "../dao/PersistenceFactory.js";
 
 const { CartsDao, ProductsDao, TicketsDao, UsersDao, ChatDao } =
-  PersistenceFactory.getPersistence();
+  await PersistenceFactory.getPersistence();
 
 export const cartsService = new CartsRepository(new CartsDao());
 export const productsService = new ProductsRepository(new ProductsDao());

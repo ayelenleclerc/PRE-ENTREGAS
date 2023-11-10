@@ -28,7 +28,7 @@ export default class PersistenceFactory {
         break;
       }
       case "MONGO": {
-        UsersDao = (await import("./Mongo/UsersDao.js")).default;
+        UsersDao = (await import("./mongo/UsersDao.js")).default;
         CartsDao = (await import("./mongo/CartsDao.js")).default;
         ProductsDao = (await import("./mongo/ProductsDao.js")).default;
         TicketsDao = (await import("./mongo/TicketsDao.js")).default;
