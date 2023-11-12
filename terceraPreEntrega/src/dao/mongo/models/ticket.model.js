@@ -4,13 +4,6 @@ const codeTicket = () => Date.now().toString(15);
 
 const collection = "tickets";
 
-const cartSubSchema = new mongoose.Schema({
-  cart: {
-    type: mongoose.SchemaTypes.ObjectId,
-    ref: "carts",
-  },
-});
-
 const schema = new mongoose.Schema(
   {
     code: {
@@ -28,8 +21,9 @@ const schema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    carts: {
-      type: [cartSubSchema],
+    amount: {
+      type: Number,
+      required:true
     },
   },
   {
@@ -37,9 +31,6 @@ const schema = new mongoose.Schema(
   }
 );
 
-schema.pre(["find", "findOne"], function () {
-  this.populate("carts.cart");
-});
 
 const ticketModel = mongoose.model(collection, schema);
 

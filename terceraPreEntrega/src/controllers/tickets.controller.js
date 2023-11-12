@@ -17,9 +17,16 @@ const getTicketById = async (req, res) => {
       .status(404)
       .send({ status: "error", message: "Ticket not found" });
   return res.send({ status: "success", payload: ticket });
-};
+}
 const createTicket = async (req, res) => {
-  const result = await ticketsService.createTicket();
+  
+  const newTicket = {
+    code, 
+    purchase_datetime,
+    purchaser: req.user.email,
+    amount
+  }
+  const result = await ticketsService.createTicket(newTicket);
   return res.send({ status: "success", payload: result });
 };
 

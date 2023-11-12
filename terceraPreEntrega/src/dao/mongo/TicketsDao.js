@@ -8,8 +8,8 @@ export default class TicketsDao {
     return ticketModel.findOne(params).populate("carts.cart");
   };
 
-  createTicket = () => {
-    return ticketModel.create({ carts: [], populate: true });
+  createTicket = (ticket) => {
+    return ticketModel.create(ticket);
   };
 
   updateTicket = (id, ticket) => {
