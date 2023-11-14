@@ -122,16 +122,11 @@ const updateProduct = async (req, res) => {
   }
 };
 
-//eliminar todos los produtos del carrito
-
 const deleteTotalProduct = async (req, res) => {
   const { cid } = req.params;
   //accedo a la lista de carritos para ver si existe el id buscado
-  const cartId = await cartsService.getCartById(cid);
-  // como me traer un array en vez del objeto directamente, tomo la posicion 0 para tener el objeto
-  let objCart = await cartId[0];
-
-  if (objCart) {
+  const cart = await cartsService.getCartById({ _id: cid });
+  if (cart) {
     await cartsService.updateCart({ _id: cid }, { products: [] });
     return res.send({
       status: "success",
@@ -142,7 +137,6 @@ const deleteTotalProduct = async (req, res) => {
   }
 };
 
-//actualizar carrito
 const updateCart = async (req, res) => {
   const { cid } = req.params;
   const cart = await cartsService.getCartById({ _id: cid });
@@ -151,7 +145,6 @@ const updateCart = async (req, res) => {
     return res.status(404).send({ status: "error", message: "Cart not found" });
   }
 
-  // Actualiza el carrito con productos vacíos
   await cartsService.updateCart({ _id: cid }, { products: [] });
 
   res.send({

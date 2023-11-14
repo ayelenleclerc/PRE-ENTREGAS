@@ -1,0 +1,21 @@
+<h2>Finalizar compra</h2>
+
+<div class="row">
+  <p>Usuario: {{req.user.name}} - Email: {{req.user.email}}</p>
+</div>
+<div class="row">
+  <ul>Productos:
+    {{#each req.user.cart.products}}<li>{{this.title}}</li><li>Cantidad:
+        {{this.quantity}}</li>{{/each}}</ul>
+</div>
+
+<div class="total">
+  <p>Total: {{amount}}</p>
+</div>
+
+<div class="row">
+  <button>Finalizar compra</button>
+</div>
+<p>Muchas gracias por su compra</p>
+
+<script src="js/purchase.js"></script>

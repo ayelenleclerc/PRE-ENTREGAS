@@ -2,20 +2,20 @@ export default class TicketsRepository {
   constructor(dao) {
     this.dao = dao;
   }
-  getTickets = () => {
-    return this.dao.getTickets();
+  getTickets = (params) => {
+    return this.dao.getTickets(params);
   };
 
-  getTicketById = () => {
-    return this.dao.getTicketById(params);
+  getTicketsByCart = (params) => {
+    return this.dao.getTicketsByCart(params);
   };
-  createTicket = () => {
-    return this, dao.createTicket();
+  createTicket = (ticket) => {
+    return this.dao.createTicket(ticket);
   };
-  updateTicket = () => {
+  updateTicket = (id, ticket) => {
     return this, dao.updateTicket(id, ticket);
   };
-  deleteTicket = () => {
+  deleteTicket = (id) => {
     return this, dao.deleteTicket(id);
   };
 }

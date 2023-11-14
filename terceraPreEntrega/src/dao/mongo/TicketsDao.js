@@ -4,12 +4,12 @@ export default class TicketsDao {
   getTickets = (params) => {
     return ticketModel.find(params).lean();
   };
-  getTicketById = (params) => {
-    return ticketModel.findOne(params).populate("carts.cart");
+  getTicketsByCart = (params) => {
+    return ticketModel.findOne(params).lean();
   };
 
-  createTicket = () => {
-    return ticketModel.create({ carts: [], populate: true });
+  createTicket = (ticket) => {
+    return ticketModel.create(ticket);
   };
 
   updateTicket = (id, ticket) => {

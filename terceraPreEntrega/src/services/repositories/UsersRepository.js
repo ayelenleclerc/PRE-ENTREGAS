@@ -2,19 +2,19 @@ export default class UsersRepository {
   constructor(dao) {
     this.dao = dao;
   }
-  getUsers = () => {
+  getUsers = (params) => {
     return this.dao.getUsers(params);
   };
-  getUserBy = () => {
+  getUserBy = (params) => {
     return this.dao.getUserBy(params);
   };
-  createUser = () => {
+  createUser = (user) => {
     return this.dao.createUser(user);
   };
-  updateUser = () => {
+  updateUser = (id, user) => {
     return this.dao.updateUser(id, user);
   };
-  deleteUser = () => {
+  deleteUser = (id) => {
     return this.dao.deleteUser(id);
   };
 }
