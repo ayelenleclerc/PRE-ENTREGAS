@@ -15,6 +15,10 @@ const schema = new mongoose.Schema({
     type: mongoose.SchemaTypes.ObjectId,
     ref: "carts",
   },
+  active: {
+    type: Boolean,
+    default: true
+  }
 });
 
 const userModel = mongoose.model(collection, schema);
