@@ -17,6 +17,6 @@ export default class CartsDao {
   };
 
   deleteCart = (id) => {
-    return cartModel.deleteOne({ _id: id });
+    return cartModel.updateOne({ _id: id }, { $set: { products: [] } });
   };
 }

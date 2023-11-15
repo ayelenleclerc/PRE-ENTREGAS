@@ -57,12 +57,12 @@ comprar.addEventListener("click", () => {
   if (cart) {
     window.location = `/`;
   } else {
-    console.log(carrito);
-    const newCart = {
+    const newTicket = {
       code: codeTicket(),
       purchase_datetime: Date.now(),
       amount: parseFloat(carrito[1]),
       purchaser: carrito[2].toString(),
+      cart: carrito[0],
     };
 
     let cid = carrito[0];
@@ -72,12 +72,10 @@ comprar.addEventListener("click", () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newCart),
+        body: JSON.stringify(newTicket),
       })
         .then((response) => response.json())
-        .then((data) => {
-          console.log(data);
-        });
+        .then((data) => {});
 
     response();
   }

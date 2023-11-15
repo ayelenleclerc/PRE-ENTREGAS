@@ -75,6 +75,25 @@
   background-color: rgb(242, 73, 73);
   color: white;
 }
+.btn-logout {
+  width: fit-content;
+}
+.profile {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: center;
+  align-items: flex-start;
+  margin: 20px;
+}
+.profileName {
+  font-size: 20px;
+}
+
+.profileEmail {
+  font-size: 20px;
+}
 .paginationPanel {
   display: flex;
   flex-direction: row;

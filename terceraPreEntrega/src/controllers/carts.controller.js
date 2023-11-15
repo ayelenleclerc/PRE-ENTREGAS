@@ -48,8 +48,6 @@ const deleteProduct = async (req, res) => {
   }
 };
 
-//agregar un producto al carrito
-
 const addProduct = async (req, res, next) => {
   const { cid, pid, quantity } = req.params;
   const product = await productsService.getProductBy({
@@ -89,14 +87,12 @@ const addProduct = async (req, res, next) => {
   }
 };
 
-//actualizar la cantidad de un producto en el carrito
-
 const updateProduct = async (req, res) => {
   const { cid, pid, quantity } = req.params;
-  //accedo a la lista de carritos para ver si existe el id buscado
+
   const cartId = await cartsService.getCartById(cid);
   const quantityAdd = quantity ? quantity : 1;
-  // como me traer un array en vez del objeto directamente, tomo la posicion 0 para tener el objeto
+
   let objCart = await cartId[0];
   if (objCart) {
     const productId = await objCart.products.find(
@@ -107,7 +103,7 @@ const updateProduct = async (req, res) => {
       let positionProduct = await arrayProducts.findIndex(
         (product) => product.product._id == pid
       );
-      //actualizo la cantidad para el id del producto que quiero actualizar
+
       arrayProducts[await positionProduct].quantity = quantityAdd;
       await cartsService.updateCart({ _id: cid }, { products: arrayProducts });
       return res.send({
@@ -158,7 +154,7 @@ const deleteCart = async (req, res) => {
   if (!cart)
     return res.status(400).send({ status: "error", message: "Cart not found" });
   await cartsService.deleteCart(cid);
-  res.send({ status: "success", message: "Cart deleted successfully" });
+  return res.send({ status: "success", message: "Cart deleted successfully" });
 };
 
 export default {

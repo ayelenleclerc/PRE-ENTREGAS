@@ -26,6 +26,10 @@ const schema = new mongoose.Schema(
       type: Number,
       required: true,
     },
+    cart: {
+      type: mongoose.SchemaTypes.ObjectId,
+      ref: "carts",
+    },
   },
   {
     timestamps: true,
