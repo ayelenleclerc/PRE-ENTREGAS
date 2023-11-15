@@ -32,6 +32,7 @@ const response = async () => {
     });
 
     ticket.innerHTML = "";
+
     // return window.location.replace("/profile");
   });
 };

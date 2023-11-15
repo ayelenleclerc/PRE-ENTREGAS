@@ -63,7 +63,7 @@ class ViewsRouter extends BaseRouter {
       return res.render("cart");
     });
     this.get("/purchase", ["AUTH"], async (req, res) => {
-      const ticket = await ticketsService.getTicketsByCart(req.user.cart._id);
+      const ticket = await ticketsService.getTicketsBy(req.user.cart._id);
       return res.render("purchase");
     });
   }

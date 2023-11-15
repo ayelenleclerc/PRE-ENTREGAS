@@ -1,19 +1,20 @@
 import { ticketsService, cartsService } from "../services/index.js";
 
-const getTicketsByCart = async (req, res) => {
+const getTicketsBy = async (req, res) => {
   const { cid } = req.params;
-  const cart = await cartsService.getCartById({ _id: cid });
-  if (!cart) {
-    return res.status(404).send({
-      status: "error",
-      message: "Cart not found",
-    });
-  }
-  const tickets = await ticketsService.getTicketsByCart({ cart });
+  const allTickets = await ticketsService.getTickets();
+  let ticketsToCart = [];
+  allTickets.forEach((ticket) => {
+    if (ticket.cart == cid) {
+      ticketsToCart.push(ticket);
+    }
+  });
+  const ticket = ticketsToCart.at(-1);
+
   return res.send({
     status: "success",
     message: "Tickets retrieved successfully",
-    payload: tickets,
+    payload: ticket,
   });
 };
 const createTicket = async (req, res) => {
@@ -35,7 +36,20 @@ const createTicket = async (req, res) => {
   });
 };
 
+const updateTicket = async (req, res) => {
+  const { id } = req.params;
+  const { code, purchase_datetime, purchaser, amount, cart } = req.body;
+  const updatedTicket = {
+    code,
+    purchase_datetime,
+    purchaser,
+    amount,
+    cart,
+    active: false,
+  };
+};
 export default {
   createTicket,
-  getTicketsByCart,
+  getTicketsBy,
+  updateTicket,
 };

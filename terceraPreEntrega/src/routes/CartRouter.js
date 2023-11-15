@@ -6,7 +6,7 @@ class CartRouter extends BaseRouter {
   init() {
     this.get("/:cid", ["USER"], cartsController.getCartById);
 
-    this.get("/:cid/purchase", ["USER"], ticketsController.getTicketsByCart);
+    this.get("/:cid/purchase", ["USER"], ticketsController.getTicketsBy);
 
     this.post("/:cid/purchase", ["USER"], ticketsController.createTicket);
 

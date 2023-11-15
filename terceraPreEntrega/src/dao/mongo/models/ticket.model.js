@@ -30,6 +30,10 @@ const schema = new mongoose.Schema(
       type: mongoose.SchemaTypes.ObjectId,
       ref: "carts",
     },
+    active: {
+      type: Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,

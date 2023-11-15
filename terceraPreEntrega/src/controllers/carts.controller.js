@@ -1,4 +1,8 @@
-import { cartsService, productsService } from "../services/index.js";
+import {
+  cartsService,
+  productsService,
+  ticketsService,
+} from "../services/index.js";
 
 const getCarts = async (req, res) => {
   const carts = await cartsService.getCarts();
@@ -124,6 +128,7 @@ const deleteTotalProduct = async (req, res) => {
   const cart = await cartsService.getCartById({ _id: cid });
   if (cart) {
     await cartsService.updateCart({ _id: cid }, { products: [] });
+
     return res.send({
       status: "success",
       message: "All products deleted successfully",

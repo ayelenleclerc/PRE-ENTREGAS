@@ -6,8 +6,8 @@ export default class TicketsRepository {
     return this.dao.getTickets(params);
   };
 
-  getTicketsByCart = (params) => {
-    return this.dao.getTicketsByCart(params);
+  getTicketsBy = (params) => {
+    return this.dao.getTicketsBy(params);
   };
   createTicket = (ticket) => {
     return this.dao.createTicket(ticket);
