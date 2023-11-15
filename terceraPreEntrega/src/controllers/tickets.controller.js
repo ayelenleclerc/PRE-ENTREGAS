@@ -1,4 +1,4 @@
-import { ticketsService, cartsService } from "../services/index.js";
+import { ticketsService } from "../services/index.js";
 
 const getTicketsBy = async (req, res) => {
   const { cid } = req.params;

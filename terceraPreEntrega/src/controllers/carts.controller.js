@@ -22,12 +22,10 @@ const createCart = async (req, res) => {
 };
 
 const deleteProduct = async (req, res) => {
-  //accedo a la lista de carritos para ver si existe el id buscado
   const cartId = await cartsService.getCartById(cid);
-  // como me traer un array en vez del objeto directamente, tomo la posicion 0 para tener el objeto
+
   let objCart = await cartId[0];
   if (objCart) {
-    //busco en el carrito el producto a eliminar y valido que exista
     const productId = await objCart.products.find(
       (product) => product.product._id == pid
     );
