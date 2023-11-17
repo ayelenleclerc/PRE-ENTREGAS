@@ -18,7 +18,7 @@
 }
 .title {
   font-family: "Borel", cursive;
-  font-size: 3rem;
+  font-size: 250%;
   text-align: center;
   margin: 20px;
 }
@@ -78,6 +78,7 @@
 .btn-logout {
   width: fit-content;
 }
+
 .profile {
   display: flex;
   flex-direction: column;
@@ -166,4 +167,18 @@
 
 .code {
   font-size: 10px;
+}
+
+.btnContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.btn-a {
+  width: 100%;
 }

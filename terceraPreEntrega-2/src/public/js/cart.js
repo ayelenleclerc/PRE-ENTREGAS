@@ -15,7 +15,7 @@ const response = async () => {
     const cartID = await fetch(`/api/carts/${idCart}`, { method: "GET" });
     const resultCart = await cartID.json();
     const productsInCart = resultCart.payload.products;
-    let amount = 0;
+    let total = 0;
 
     productsInCart.forEach((product) => {
       products.innerHTML += ` <td>${product.product.title}</td>
@@ -32,8 +32,9 @@ const response = async () => {
     });
 
     productsInCart.forEach((product) => {
-      amount += product.product.price * product.quantity;
+      total += product.product.price * product.quantity;
     });
+    const amount = total.toFixed(2);
     products.innerHTML += `
     <td></td><td></td><td></td><td></td><td></td><td><strong>Total</strong></td>
     <td><strong>$ ${amount}</strong></td>
@@ -58,5 +59,4 @@ comprar.addEventListener("click", () => {
       footer: '<a href="/">Registrate o inicia sesión</a>',
     });
   }
-  return;
 });

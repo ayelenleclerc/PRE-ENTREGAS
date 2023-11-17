@@ -162,62 +162,79 @@ const deleteCart = async (req, res) => {
 
 const purchaseCart = async (req, res) => {
   const { cid } = req.params;
-  const { products } = req.body;
   const user = req.user;
+  let productPurchase = [];
+  let productNotPurchased = [];
 
-  const cart = await cartsService.getCartById({ _id: cid }, { populate: true });
-  if (!cart) {
-    return res.status(404).send({ status: "error", message: "Cart not found" });
-  }
-  const productPurchase = [];
-  const productNotPurchased = [];
-  let newStock;
-  cart.products.forEach((product) => {
-    if (products.product.stock >= product.quantity) {
-      newStock = product.product.stock - product.quantity;
-      productPurchase.push(product);
-    } else {
-      productNotPurchased.push(product);
+  try {
+    const cart = await cartsService.getCartById({ _id: cid });
+    if (!cart) {
+      return res.status(404).send({
+        status: "error",
+        message: "Cart not found",
+      });
     }
-  });
-  const newCart = await cartsService.updateCart(
-    { _id: cid },
-    {
-      products: productNotPurchased,
+
+    for (const item of cart.products) {
+      const product = await productsService.getProductBy(item.product._id);
+      if (!product) {
+        productNotPurchased.push(item);
+        continue;
+      }
+
+      if (item.quantity > product.stock) {
+        productNotPurchased.push(item);
+        continue;
+      }
+
+      product.stock -= item.quantity;
+      await productsService.updateProduct(
+        { _id: product._id },
+        { stock: product.stock }
+      );
+
+      productPurchase.push(item);
     }
-  );
-  if (!newCart) {
-    return res.status(400).send({ status: "error", message: "Cart not found" });
-  } else {
-    await cartsService.updateCart(
-      { _id: cid },
-      { products: productNotPurchased }
-    );
-    return res.send({
-      status: "success",
-      message: "Cart updated successfully",
-      payload: newCart,
+  } catch (error) {
+    console.error("An error occurred:", error);
+    return res.status(500).send({
+      status: "error",
+      message: "An error occurred while processing the purchase",
     });
   }
 
-  await productsService.updateProduct(
-    { _id: products.product._id },
-    { stock: newStock }
-  );
-  const amount = productPurchase.reduce(
-    (acc, product) => acc + product.product.price * product.quantity,
+  const total = productPurchase.reduce(
+    (acc, item) => acc + item.product.price * item.quantity,
     0
   );
+  const amount = total.toFixed(2);
 
-  const codeTicket = () => Date.now().toString(15);
+  const codeTicket = Date.now().toString(15);
+
   const newTicket = {
-    code: codeTicket(),
+    code: codeTicket,
     amount: amount,
+    purchase_datetime: new Date().toISOString(),
     purchaser: user.email,
     products: productPurchase,
   };
 
-  await ticketsService.createTicket(newTicket);
+  try {
+    await ticketsService.createTicket(newTicket);
+    if (productNotPurchased.length > 0) {
+      await cartsService.updateCart(
+        { _id: cid },
+        { products: productNotPurchased }
+      );
+    }
+  } catch (error) {
+    console.error("An error occurred:", error);
+    return res.status(500).send({
+      status: "error",
+      message: "An error occurred while processing the purchase",
+    });
+  }
+
   return res.send({
     status: "success",
     message: "Cart purchased successfully",

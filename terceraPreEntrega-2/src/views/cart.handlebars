@@ -5,28 +5,29 @@
 <div>
   <table class="table">
     <thead>
-      <tr>Nombre</tr>
-      <tr>Descripción</tr>
-      <tr>Categoría</tr>
-      <tr>Stock</tr>
-      <tr>Precio</tr>
-      <tr>Cantidad</tr>
-      <tr>Total</tr>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Subtotal</th>
+      </tr>
     </thead>
     <tbody id="cartContainer">
 
     </tbody>
   </table>
-
 </div>
-<div>
+<div class="btnContainer">
   <a href="/products"><input
-      class="btn btn-primary"
+      class="btn btn-primary btn-a"
       type="submit"
       value="Seguir comprando"
     /></a>
   <a href="/purchase"><input
-      class="btn btn-success"
+      class="btn btn-success btn-a"
       type="submit"
       value="Finalizar compra"
       id="purchaseBtn"

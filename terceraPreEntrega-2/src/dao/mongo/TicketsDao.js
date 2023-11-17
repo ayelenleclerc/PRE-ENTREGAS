@@ -4,10 +4,7 @@ export default class TicketsDao {
   getTickets = (params) => {
     return ticketModel.find(params).lean();
   };
-  getTicketsBy = (params, options) => {
-    if (options.populate) {
-      return ticketModel.findOne(params).populate("carts.cart");
-    }
+  getTicketsBy = (params) => {
     return ticketModel.findOne(params).lean();
   };
 

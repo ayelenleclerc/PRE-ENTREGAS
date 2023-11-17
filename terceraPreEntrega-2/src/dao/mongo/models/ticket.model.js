@@ -12,7 +12,7 @@ const schema = new mongoose.Schema(
     purchase_datetime: {
       type: Date,
       required: true,
-      default: Date.now(),
+      default: new Date().toISOString(),
     },
     amount: {
       type: Number,
