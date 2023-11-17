@@ -1,0 +1,42 @@
+<div class="container">
+  <h1 class="title">Carrito de compras</h1>
+</div>
+
+<div>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Nombre</th>
+        <th scope="col">Descripción</th>
+        <th scope="col">Categoría</th>
+        <th scope="col">Stock</th>
+        <th scope="col">Precio</th>
+        <th scope="col">Cantidad</th>
+        <th scope="col">Subtotal</th>
+      </tr>
+    </thead>
+    <tbody id="cartContainer">
+
+    </tbody>
+  </table>
+</div>
+<div class="btnContainer">
+  <a href="/products"><input
+      class="btn btn-primary btn-a"
+      type="submit"
+      value="Seguir comprando"
+    /></a>
+  <a href="/purchase"><input
+      class="btn btn-success btn-a"
+      type="submit"
+      value="Finalizar compra"
+      id="purchaseBtn"
+    /></a>
+</div>
+
+<script
+  src="
+https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js
+"
+></script>
+<script src="/js/cart.js"></script>
