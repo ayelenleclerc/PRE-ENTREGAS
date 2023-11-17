@@ -42,6 +42,48 @@ class SessionsRouter extends BaseRouter {
     this.get("/current", ["AUTH"], async (req, res) => {
       return res.sendSuccessWithPayload(req.user);
     });
+
+    this.get(
+      "/github",
+      ["NO_AUTH"],
+      passportCall("github", { strategyType: "GITHUB" }),
+      async (req, res) => {}
+    );
+    this.get(
+      "/githubcallback",
+      ["NO_AUTH"],
+      passportCall("github", { strategyType: "GITHUB" }),
+      async (req, res) => {
+        try {
+          const { firstName, lastName, _id, role, cart, email } = req.user;
+
+          const tokenizedUser = {
+            name: `${firstName} ${lastName}`,
+            id: _id,
+            role: role,
+            cart: cart,
+            email: email,
+          };
+
+          const token = jwt.sign(tokenizedUser, config.jwt.SECRET, {
+            expiresIn: "1d",
+          });
+
+          res.cookie(config.jwt.COOKIE, token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            maxAge: 86400000,
+          });
+
+          res.clearCookie("cart");
+          return res.sendSuccess("Logged In");
+        } catch (error) {
+          console.error("Error in GitHub callback:", error);
+          return res.sendError("An error occurred during login");
+        }
+      }
+    );
   }
 }
 

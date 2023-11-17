@@ -112,21 +112,21 @@ const initializePassportStrategies = () => {
       },
       async (accessToken, refreshToken, profile, done) => {
         try {
-          console.log(profile);
-          let user = await usersService.getUserBy({
-            email: profile._json.email,
-          });
+          const email = profile._json.email;
+
+          let user = await usersService.getUserBy({ email });
+
           if (!user) {
-            let newUser = {
+            const newUser = {
               first_name: profile._json.name,
               last_name: "",
               age: "",
-              email: profile._json.email,
+              email,
               password: "",
               admin: false,
             };
-            let result = await usersService.createUser(newUser);
-            return done(null, result);
+            const createdUser = await usersService.createUser(newUser);
+            return done(null, createdUser);
           } else {
             return done(null, user);
           }
@@ -136,6 +136,12 @@ const initializePassportStrategies = () => {
       }
     )
   );
+  // passport.serializeUser((user, done) => {
+  //   done(null, user._id);
+  // });
+  // passport.deserializeUser((user, done) => {
+  //   done(null, user);
+  // });
 };
 
 export default initializePassportStrategies;
