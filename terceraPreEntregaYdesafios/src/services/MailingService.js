@@ -1,8 +1,11 @@
-const GMAIL_USER = "EMAIL MAILER";
-const GMAIL_PASSWORD = "PASSWORD MAILER";
+import nodemailer from "nodemailer";
+import config from "../config/config.js";
+
+const GMAIL_USER = config.gmail.USER;
+const GMAIL_PASSWORD = config.gmail.PASS;
 
 export default class MailingService {
-  constructor() {
+  constructor(transport) {
     this.transport = nodemailer.createTransport({
       service: "gmail",
       port: 587,
@@ -14,7 +17,7 @@ export default class MailingService {
   }
 
   sendMail = async (mailRequest) => {
-    const result = await transport.sendMail(mailRequest);
+    const result = await this.transport.sendMail(mailRequest);
     return result;
   };
 }

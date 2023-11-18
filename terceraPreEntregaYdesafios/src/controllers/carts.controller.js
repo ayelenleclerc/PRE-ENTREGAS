@@ -234,7 +234,7 @@ const purchaseCart = async (req, res) => {
       message: "An error occurred while processing the purchase",
     });
   }
-
+  console.log(newTicket);
   return res.send({
     status: "success",
     message: "Cart purchased successfully",

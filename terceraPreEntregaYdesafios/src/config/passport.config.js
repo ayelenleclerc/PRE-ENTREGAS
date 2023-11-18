@@ -107,8 +107,10 @@ const initializePassportStrategies = () => {
     "github",
     new GitHubStrategy(
       {
-        clientID: "Iv1.4137e4f2dd3e6616",
-        clientSecret: "353ae059b1ff420033c685f1ab84e3c1a90ff3cc",
+        clientID: config.github.CLIENT_ID || "Iv1.4137e4f2dd3e6616",
+        clientSecret:
+          config.github.CLIENT_SECRET ||
+          "353ae059b1ff420033c685f1ab84e3c1a90ff3cc",
         callbackURL: "http://localhost:8080/api/sessions/githubcallback",
       },
       async (accessToken, refreshToken, profile, done) => {
@@ -142,8 +144,10 @@ const initializePassportStrategies = () => {
     new GoogleStrategy(
       {
         clientID:
+          config.google.CLIENT_ID ||
           "831041375496-j26tjm40jogcosvclgge9shbc7ksbmd5.apps.googleusercontent.com",
-        clientSecret: "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",
+        clientSecret:
+          config.google.CLIENT_SECRET || "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",
         callbackURL: "http://localhost:8080/api/sessions/googlecallback",
         passReqToCallback: true,
       },

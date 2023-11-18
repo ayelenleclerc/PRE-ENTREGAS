@@ -5,7 +5,7 @@ class ProductRouter extends BaseRouter {
   init() {
     this.get("/", ["PUBLIC"], productsController.paginateProducts);
 
-    this.get("/:pid", ["PUBLIC"], productsController.getProductBy);
+    this.get("/:pid", ["PUBLIC"], productsController.getProductsBy);
 
     this.post("/", ["ADMIN"], productsController.createProduct);
 

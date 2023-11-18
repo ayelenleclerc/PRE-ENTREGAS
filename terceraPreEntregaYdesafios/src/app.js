@@ -9,6 +9,8 @@ import productsRouter from "./routes/ProductsRouter.js";
 import cartsRouter from "./routes/CartRouter.js";
 import viewsRouter from "./routes/ViewsRouter.js";
 import SessionsRouter from "./routes/SessionsRouter.js";
+import swaggerJSDoc from "swagger-jsdoc";
+import swaggerUIExpress from "swagger-ui-express";
 
 import __dirname from "./utils.js";
 import config from "./config/config.js";
@@ -44,6 +46,25 @@ app.use("/api/sessions", SessionsRouter);
 const httpServer = app.listen(PORT, () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
+
+const swaggerOptions = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "La Tienda docs",
+      version: "1.0.0",
+      description: "Aplicación para  E-commerce",
+    },
+  },
+  apis: [`${__dirname}/docs/**/*.yml`],
+};
+
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+app.use(
+  "/apidocs",
+  swaggerUIExpress.serve,
+  swaggerUIExpress.setup(swaggerSpec)
+);
 
 const socketServer = new Server(httpServer);
 

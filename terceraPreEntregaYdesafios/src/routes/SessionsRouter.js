@@ -4,6 +4,8 @@ import BaseRouter from "./BaseRouter.js";
 import config from "../config/config.js";
 import { validateJWT } from "../middlewares/jwtExtractor.js";
 import authService from "../services/authService.js";
+import __dirname__ from "../utils.js";
+import MailingService from "../services/MailingService.js";
 
 class SessionsRouter extends BaseRouter {
   init() {
@@ -178,6 +180,48 @@ class SessionsRouter extends BaseRouter {
         `[${new Date().toISOString()}] Error: Hubo un fallo en la autenticacion del usuario`
       );
       res.status(401).send({ status: "error" });
+    });
+    this.get("/mails", ["AUTH"], async (req, res) => {
+      const mailService = new MailingService();
+
+      const mailRequest = {
+        from: "La tienda <ayelenleclerc@gmail.com>",
+        to: " ayelenleclerc@gmail.com",
+        subject: "Probando NodeMailer",
+        html: `
+                <div>
+                    <h1>Compra realizada</h1>
+                    <br/>
+                    <p>Esto es una prueba</p>
+                    <br/>
+                    <img src="cid:mailing"/>
+                    </div>
+      `,
+        attachments: [
+          {
+            filename: "gmail.jpg",
+            path: `./src/public/img/gmail.jpg`,
+            cid: "mailing",
+          },
+        ],
+      };
+
+      const mailResult = await mailService.sendMail(mailRequest);
+      console.log(mailResult);
+      return res.send({
+        status: "success",
+        message: "Mail sent",
+        payload: mailResult,
+      });
+    });
+    this.get("/twilio", ["AUTH"], async (req, res) => {
+      const result = await twilioClient.messages.create({
+        from: TWILIO_TEST_NUMBER,
+        to: "+5491133749360",
+        body: "Hola, SMS de prueba",
+      });
+      console.log(result);
+      res.sendStatus(200);
     });
   }
 }
