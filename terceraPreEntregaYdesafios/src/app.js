@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 import mongoose from "mongoose";
 import handlebars from "express-handlebars";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import productsRouter from "./routes/ProductsRouter.js";
 import cartsRouter from "./routes/CartRouter.js";
@@ -26,6 +27,7 @@ app.engine("handlebars", handlebars.engine());
 app.set("view engine", "handlebars");
 app.set("views", `${__dirname}/views`);
 
+app.use(cors({ origin: ["http://localhost:8080"], credentials: true }));
 app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

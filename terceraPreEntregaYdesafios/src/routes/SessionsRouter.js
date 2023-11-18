@@ -77,7 +77,8 @@ class SessionsRouter extends BaseRouter {
           });
 
           res.clearCookie("cart");
-          return res.sendSuccess("Logged In");
+
+          return res.redirect("/profile");
         } catch (error) {
           console.error("Error in GitHub callback:", error);
           return res.sendError("An error occurred during login");

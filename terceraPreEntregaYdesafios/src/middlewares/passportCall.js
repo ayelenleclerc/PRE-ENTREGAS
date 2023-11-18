@@ -1,24 +1,18 @@
 import passport from "passport";
-// passportCall.js
 
-// Función de middleware para manejar la autenticación de Passport
 const passportCall = (strategy, options = {}) => {
   return (req, res, next) => {
-    // Autenticar usando la estrategia especificada
     passport.authenticate(strategy, async (error, user, info) => {
-      // Manejar errores de autenticación
       if (error) {
         return next(error);
       }
 
-      // Validar las opciones proporcionadas
       if (!options.strategyType) {
         return res
           .status(500)
           .send("Internal Server Error: strategyType not defined");
       }
 
-      // Manejar el resultado de la autenticación
       if (!user) {
         handleUnauthenticatedUser(req, res, next, options.strategyType, info);
       } else {
@@ -29,17 +23,17 @@ const passportCall = (strategy, options = {}) => {
   };
 };
 
-// Función para manejar el caso en que no se encuentra un usuario autenticado
 const handleUnauthenticatedUser = (req, res, next, strategyType, info) => {
   switch (strategyType) {
     case "LOCALS":
-      return res
-        .status(401)
-        .send({
-          status: "error",
-          error: info.message ? info.message : info.toString(),
-        });
+      return res.status(401).send({
+        status: "error",
+        error: info.message ? info.message : info.toString(),
+      });
     case "JWT":
+      req.user = null;
+      next();
+      break;
     case "GITHUB":
       req.user = null;
       next();
