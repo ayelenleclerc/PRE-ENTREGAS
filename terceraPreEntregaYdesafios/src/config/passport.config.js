@@ -2,6 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import { Strategy as JWTStrategy, ExtractJwt } from "passport-jwt";
 import GitHubStrategy from "passport-github2";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 
 import { usersService, cartsService } from "../services/index.js";
 import authService from "../services/authService.js";
@@ -132,6 +133,43 @@ const initializePassportStrategies = () => {
           }
         } catch (err) {
           return done(err);
+        }
+      }
+    )
+  );
+  passport.use(
+    "google",
+    new GoogleStrategy(
+      {
+        clientID:
+          "831041375496-j26tjm40jogcosvclgge9shbc7ksbmd5.apps.googleusercontent.com",
+        clientSecret: "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",
+        callbackURL: "http://localhost:8080/api/sessions/googlecallback",
+        passReqToCallback: true,
+      },
+      async (req, accessToken, refreshToken, profile, done) => {
+        const { _json } = profile;
+        const user = await usersService.getUserBy({ email: _json.email });
+        if (user) {
+          return done(null, user);
+        } else {
+          const newUser = {
+            firstName: _json.given_name,
+            lastName: _json.family_name,
+            email: _json.email,
+          };
+          let cart;
+
+          if (req.cookies["cart"]) {
+            cart = req.cookies["cart"];
+          } else {
+            const cartResult = await cartsService.createCart();
+            cart = cartResult.id;
+          }
+
+          newUser.cart = cart;
+          const result = await usersService.createUser(newUser);
+          return done(null, result);
         }
       }
     )

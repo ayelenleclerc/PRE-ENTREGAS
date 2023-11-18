@@ -2,7 +2,7 @@ import passport from "passport";
 
 const passportCall = (strategy, options = {}) => {
   return (req, res, next) => {
-    passport.authenticate(strategy, async (error, user, info) => {
+    passport.authenticate(strategy, options, async (error, user, info) => {
       if (error) {
         return next(error);
       }
@@ -35,6 +35,10 @@ const handleUnauthenticatedUser = (req, res, next, strategyType, info) => {
       next();
       break;
     case "GITHUB":
+      req.user = null;
+      next();
+      break;
+    case "OAUTH":
       req.user = null;
       next();
       break;

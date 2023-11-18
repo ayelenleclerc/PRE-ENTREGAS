@@ -2,6 +2,8 @@ import jwt from "jsonwebtoken";
 import passportCall from "../middlewares/passportCall.js";
 import BaseRouter from "./BaseRouter.js";
 import config from "../config/config.js";
+import { validateJWT } from "../middlewares/jwtExtractor.js";
+import authService from "../services/authService.js";
 
 class SessionsRouter extends BaseRouter {
   init() {
@@ -85,6 +87,98 @@ class SessionsRouter extends BaseRouter {
         }
       }
     );
+    this.get(
+      "/google",
+      ["NO_AUTH"],
+      passportCall("google", {
+        scope: ["profile", "email"],
+        strategyType: "GOOGLE",
+      }),
+      async (req, res) => {}
+    );
+
+    this.get(
+      "/googlecallback",
+      ["NO_AUTH"],
+      passportCall("google", { strategyType: "OAUTH" }),
+      async (req, res) => {
+        try {
+          const { firstName, lastName, _id, role, cart, email } = req.user;
+          const tokenizedUser = {
+            name: `${firstName} ${lastName}`,
+            id: _id,
+            role: role,
+            cart: cart,
+            email: email,
+          };
+          const token = jwt.sign(tokenizedUser, config.jwt.SECRET, {
+            expiresIn: "1d",
+          });
+          res.cookie(config.jwt.COOKIE, token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "strict",
+            maxAge: 86400000,
+          });
+          res.clearCookie("cart");
+          return res.redirect("/profile");
+        } catch (error) {
+          console.error("Error in Google callback:", error);
+          return res.sendError("An error occurred during login");
+        }
+      }
+    );
+
+    this.post("/loginJWT", validateJWT, async (req, res) => {
+      const { email, password } = req.body;
+      if (!email || !password)
+        return res
+          .status(400)
+          .send({ status: "error", error: "Incomplete values" });
+      const user = await usersService.getUserBy({ email });
+      if (!user)
+        return res
+          .status(400)
+          .send({ status: "error", error: "Incorrect Credentials" });
+      const isValidPassword = await authService.validatePassword(
+        password,
+        user.password
+      );
+      if (!isValidPassword)
+        return res
+          .status(400)
+          .send({ status: "error", error: "Invalid Credentials" });
+      const token = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          name: user.firstName,
+        },
+        config.jwt.SECRET,
+        {
+          expiresIn: "1d",
+        }
+      );
+      res.cookie(config.jwt.COOKIE, token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: 86400000,
+      });
+      return res.sendSuccess("Logged In", token);
+    });
+
+    this.get("/profileInfo", validateJWT, async (req, res) => {
+      res.send({ status: "success", payload: req.user });
+    });
+
+    this.get("/authFail", (req, res) => {
+      req.logger.error(
+        `[${new Date().toISOString()}] Error: Hubo un fallo en la autenticacion del usuario`
+      );
+      res.status(401).send({ status: "error" });
+    });
   }
 }
 
