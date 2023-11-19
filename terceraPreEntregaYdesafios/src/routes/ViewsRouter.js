@@ -53,7 +53,7 @@ class ViewsRouter extends BaseRouter {
     //   const listaProductos = await productsService.getProducts();
     //   return res.render("realTimeProducts", { listaProductos });
     // });
-    this.get("/chat", ["PUBLIC"], (req, res) => {
+    this.get("/chat", ["PUBLIC"], async (req, res) => {
       return res.render("chat");
     });
 

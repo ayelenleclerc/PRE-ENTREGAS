@@ -2,7 +2,7 @@ import { Router } from "express";
 
 const router = Router();
 
-router.param("word", (req, res, next, word) => {
+router.param("word", async (req, res, next, word) => {
   const isValidParams = /^[a-zA-Z]+$/.test(word);
   if (!isValidParams)
     return res.status(400).send({ status: "error", error: "invalid word" });
@@ -17,7 +17,7 @@ router.get("/:word", async (req, res) => {
   res.send({ status: "success", payload: req.word });
 });
 
-router.get("*", (req, res) => {
+router.get("*", async (req, res) => {
   res.status(400).send({ status: "error", error: "invalid word" });
 });
 

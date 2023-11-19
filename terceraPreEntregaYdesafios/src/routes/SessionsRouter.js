@@ -6,6 +6,7 @@ import { validateJWT } from "../middlewares/jwtExtractor.js";
 import authService from "../services/authService.js";
 import __dirname__ from "../utils.js";
 import MailingService from "../services/MailingService.js";
+import TwilioService from "../services/TwilioService.js";
 
 class SessionsRouter extends BaseRouter {
   init() {
@@ -131,51 +132,51 @@ class SessionsRouter extends BaseRouter {
       }
     );
 
-    this.post("/loginJWT", validateJWT, async (req, res) => {
-      const { email, password } = req.body;
-      if (!email || !password)
-        return res
-          .status(400)
-          .send({ status: "error", error: "Incomplete values" });
-      const user = await usersService.getUserBy({ email });
-      if (!user)
-        return res
-          .status(400)
-          .send({ status: "error", error: "Incorrect Credentials" });
-      const isValidPassword = await authService.validatePassword(
-        password,
-        user.password
-      );
-      if (!isValidPassword)
-        return res
-          .status(400)
-          .send({ status: "error", error: "Invalid Credentials" });
-      const token = jwt.sign(
-        {
-          id: user.id,
-          email: user.email,
-          role: user.role,
-          name: user.firstName,
-        },
-        config.jwt.SECRET,
-        {
-          expiresIn: "1d",
-        }
-      );
-      res.cookie(config.jwt.COOKIE, token, {
-        httpOnly: true,
-        secure: true,
-        sameSite: "strict",
-        maxAge: 86400000,
-      });
-      return res.sendSuccess("Logged In", token);
-    });
+    // this.post("/loginJWT", validateJWT, async (req, res) => {
+    //   const { email, password } = req.body;
+    //   if (!email || !password)
+    //     return res
+    //       .status(400)
+    //       .send({ status: "error", error: "Incomplete values" });
+    //   const user = await usersService.getUserBy({ email });
+    //   if (!user)
+    //     return res
+    //       .status(400)
+    //       .send({ status: "error", error: "Incorrect Credentials" });
+    //   const isValidPassword = await authService.validatePassword(
+    //     password,
+    //     user.password
+    //   );
+    //   if (!isValidPassword)
+    //     return res
+    //       .status(400)
+    //       .send({ status: "error", error: "Invalid Credentials" });
+    //   const token = jwt.sign(
+    //     {
+    //       id: user.id,
+    //       email: user.email,
+    //       role: user.role,
+    //       name: user.firstName,
+    //     },
+    //     config.jwt.SECRET,
+    //     {
+    //       expiresIn: "1d",
+    //     }
+    //   );
+    //   res.cookie(config.jwt.COOKIE, token, {
+    //     httpOnly: true,
+    //     secure: true,
+    //     sameSite: "strict",
+    //     maxAge: 86400000,
+    //   });
+    //   return res.sendSuccess("Logged In", token);
+    // });
 
-    this.get("/profileInfo", validateJWT, async (req, res) => {
-      res.send({ status: "success", payload: req.user });
-    });
+    // this.get("/profileInfo", validateJWT, async (req, res) => {
+    //   res.send({ status: "success", payload: req.user });
+    // });
 
-    this.get("/authFail", (req, res) => {
+    this.get("/authFail", async (req, res) => {
       req.logger.error(
         `[${new Date().toISOString()}] Error: Hubo un fallo en la autenticacion del usuario`
       );
@@ -214,14 +215,20 @@ class SessionsRouter extends BaseRouter {
         payload: mailResult,
       });
     });
+
     this.get("/twilio", ["AUTH"], async (req, res) => {
-      const result = await twilioClient.messages.create({
-        from: TWILIO_TEST_NUMBER,
-        to: "+5491133749360",
-        body: "Hola, SMS de prueba",
+      const twilioService = new TwilioService();
+
+      const twilioResult = twilioService.sendSMS(
+        "5491133749360",
+        "Un mensaje de prueba"
+      );
+      console.log(twilioResult);
+      return res.send({
+        status: "success",
+        message: "SMS sent",
+        payload: twilioResult,
       });
-      console.log(result);
-      res.sendStatus(200);
     });
   }
 }
