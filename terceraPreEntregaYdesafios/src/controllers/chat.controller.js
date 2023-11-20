@@ -1,2 +1,2 @@
-import ErrorsDictionary from "../dictionaries/errors.js";
-import errorCodes from "../dictionaries/errorCodes.js";
+import ErrorsDictionary from "../dictionary/errors.js";
+import errorCodes from "../dictionary/errorCodes.js";

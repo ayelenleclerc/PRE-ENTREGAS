@@ -1,7 +1,7 @@
 import { generateProducts } from "../mocks/products.js";
 import { productsService } from "../services/index.js";
-import ErrorsDictionary from "../dictionaries/errors.js";
-import errorCodes from "../dictionaries/errorCodes.js";
+import ErrorsDictionary from "../dictionary/errors.js";
+import errorCodes from "../dictionary/errorCodes.js";
 const paginateProducts = async (req, res, next) => {
   try {
     const products = await productsService.paginateProducts(

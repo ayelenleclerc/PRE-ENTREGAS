@@ -18,6 +18,7 @@ import __dirname from "./utils.js";
 import config from "./config/config.js";
 import initializePassportStrategies from "./config/passport.config.js";
 import ErrorHandler from "./middlewares/errorHandler.js";
+import { chatService } from "./services/index.js";
 
 const app = express();
 
@@ -87,39 +88,40 @@ const httpServer = app.listen(PORT, () => {
 
 const socketServer = new Server(httpServer);
 
-// socketServer.on("connection", async (socket) => {
-//   console.log("Cliente conectado con id: ", socket.id);
+socketServer.on("connection", async (socket) => {
+  console.log("Cliente conectado con id: ", socket.id);
 
-//   const listProducts = await prodManager.getProducts();
-//   socketServer.emit("sendProducts", listProducts);
+  //   const listProducts = await prodManager.getProducts();
+  //   socketServer.emit("sendProducts", listProducts);
 
-//   socket.on("addProduct", async (obj) => {
-//     await prodManager.addProduct(obj);
-//     const listProducts = await prodManager.getProducts({});
-//     socketServer.emit("sendProducts", listProducts);
-//   });
+  //   socket.on("addProduct", async (obj) => {
+  //     await prodManager.addProduct(obj);
+  //     const listProducts = await prodManager.getProducts({});
+  //     socketServer.emit("sendProducts", listProducts);
+  //   });
 
-//   socket.on("deleteProduct", async (id) => {
-//     await prodManager.deleteProduct(id);
-//     const listProducts = await prodManager.getProducts({});
-//     socketServer.emit("sendProducts", listProducts);
-//   });
-//   socket.on("disconnect", () => {
-//     console.log("Cliente desconectado");
-//   });
-//   socket.on("newUser", (usuario) => {
-//     console.log("usuario", usuario);
-//     socket.broadcast.emit("broadcast", usuario);
-//   });
-//   socket.on("disconnect", () => {
-//     console.log(`Usuario con ID : ${socket.id} esta desconectado `);
-//   });
+  //   socket.on("deleteProduct", async (id) => {
+  //     await prodManager.deleteProduct(id);
+  //     const listProducts = await prodManager.getProducts({});
+  //     socketServer.emit("sendProducts", listProducts);
+  //   });
 
-//   socket.on("message", async (info) => {
-//     // Guardar el mensaje utilizando el MessagesManager
-//     console.log(info);
-//     await chatManager.createMessage(info);
-//     // Emitir el mensaje a todos los clientes conectados
-//     socketServer.emit("chat", await chatManager.getMessages());
-//   });
-// });
+  socket.on("disconnect", () => {
+    console.log("Cliente desconectado");
+  });
+  socket.on("newUser", (usuario) => {
+    console.log("usuario", usuario);
+    socket.broadcast.emit("broadcast", usuario);
+  });
+  socket.on("disconnect", () => {
+    console.log(`Usuario con ID : ${socket.id} esta desconectado `);
+  });
+
+  socket.on("message", async (info) => {
+    // Guardar el mensaje utilizando el MessagesManager
+    console.log(info);
+    await chatManager.createMessage(info);
+    // Emitir el mensaje a todos los clientes conectados
+    socketServer.emit("chat", await chatService.getMessages());
+  });
+});

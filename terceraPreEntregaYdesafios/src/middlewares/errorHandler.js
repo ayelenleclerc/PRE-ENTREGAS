@@ -1,5 +1,5 @@
-import errorCodes from "../dictionaries/errorCodes.js";
-import ErrorsDictionary from "../dictionaries/errors.js";
+import errorCodes from "../dictionary/errorCodes.js";
+import ErrorsDictionary from "../dictionary/errors.js";
 
 const newErrorsForDictionary = [];
 const ErrorHandler = (error, req, res, next) => {
