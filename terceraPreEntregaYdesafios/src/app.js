@@ -5,6 +5,8 @@ import handlebars from "express-handlebars";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import compression from "express-compression";
+// import cluster from "cluster";
+// import os from "os";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUIExpress from "swagger-ui-express";
 
@@ -21,6 +23,7 @@ import ErrorHandler from "./middlewares/errorHandler.js";
 import { chatService } from "./services/index.js";
 import attachLogger from "./middlewares/attachLogger.js";
 
+//no entendi que parte del codigo va dentro del el cluster principal y los workers
 const app = express();
 
 const PORT = process.env.PORT || 8080;
