@@ -1,9 +1,8 @@
-import errorCodes from "../dictionaries/errorCodes";
-import ErrorsDictionary from "../dictionaries/errorsDictionary";
+import errorCodes from "../dictionaries/errorCodes.js";
+import ErrorsDictionary from "../dictionaries/errors.js";
 
 const newErrorsForDictionary = [];
-
-export default ErrorHandler = (error, req, res, next) => {
+const ErrorHandler = (error, req, res, next) => {
   const customError = new Error();
   const knownError = ErrorsDictionary[error.name];
 
@@ -28,3 +27,5 @@ const generateNewError = (error) => {
   newErrorsForDictionary.push(newError);
   return newError;
 };
+
+export default ErrorHandler;
