@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-prueba1
+  labels:
+    app: latienda
+spec:
+  containers:
+    - name: pod-container
+      image: ayelenleclerc/latienda:1.0.0
+      ports:
+        - containerPort: 8080
+      env:
+        - name: MONGO_URL
+          value: "mongodb+srv://Ayelenleclerc:yuskia13@backend.xrrgkdz.mongodb.net/ecommerce?retryWrites=true&w=majority"
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "8080"
+        - name: JWT_COOKIE
+          value: "authCookie"
+        - name: JWT_SECRET
+          value: "jwtSecret"
+        - name: GITHUB_CLIENT_ID
+          value: "Iv1.4137e4f2dd3e6616"
+        - name: GITHUB_CLIENT_SECRET
+          value: "d7a5a0e0f0e0f0e0e0f0e0f0e0f0e0f0e"
+        - name: GOOGLE_CLIENT_ID
+          value: "831041375496-j26tjm40jogcosvclgge9shbc7ksbmd5.apps.googleusercontent.com"
+        - name: GOOGLE_CLIENT_SECRET
+          value: "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"
+        - name: GMAIL_USER
+          value: "ayelenleclerc@gmail.com"
+        - name: GMAIL_PASSWORD
+          value: "dhbo dpaq polb tejy"
+        - name: TWILIO_ACCOUNT_SID
+          value: "AC66e9904094a8812e306fe7119707d21a"
+        - name: TWILIO_TOKEN
+          value: "8450edeb71418ada66dbd85416ce6dbe"
+        - name: TWILIO_TEST_NUMBER
+          value: "+12064893306"

@@ -9,6 +9,7 @@ import compression from "express-compression";
 // import os from "os";
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUIExpress from "swagger-ui-express";
+import winston from "winston";
 
 import productsRouter from "./routes/ProductsRouter.js";
 import cartsRouter from "./routes/CartRouter.js";
@@ -61,7 +62,7 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  logger.http(
+  req.logger.http(
     `${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`
   );
   next();
