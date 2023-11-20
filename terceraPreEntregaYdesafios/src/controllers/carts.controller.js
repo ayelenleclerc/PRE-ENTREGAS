@@ -11,8 +11,9 @@ const getCarts = async (req, res, next) => {
     const carts = await cartsService.getCarts();
     return res.send({ status: "success", payload: carts });
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -34,8 +35,9 @@ const getCartById = async (req, res, next) => {
         .send({ status: "error", message: "Cart not found" });
     return res.send({ status: "success", payload: cart });
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -51,8 +53,9 @@ const createCart = async (req, res, next) => {
     const result = await cartsService.createCart(cart);
     return res.send({ status: "success", payload: result._id });
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -93,8 +96,9 @@ const deleteProduct = async (req, res, next) => {
       return "Cart Not Found";
     }
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -145,8 +149,9 @@ const addProduct = async (req, res, next) => {
       return res.send({ status: "error", message: "Cart not found" });
     }
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -192,8 +197,9 @@ const updateProduct = async (req, res, next) => {
       return res.send({ status: "error", message: "Cart not found" });
     }
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -221,8 +227,9 @@ const deleteTotalProduct = async (req, res, next) => {
       return res.send({ status: "error", message: "Cart not found" });
     }
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;

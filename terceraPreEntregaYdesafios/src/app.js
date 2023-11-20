@@ -17,6 +17,7 @@ import dictionaryRouter from "./routes/dictionary.router.js";
 import __dirname from "./utils.js";
 import config from "./config/config.js";
 import initializePassportStrategies from "./config/passport.config.js";
+import ErrorHandler from "./middlewares/errorHandler.js";
 
 const app = express();
 
@@ -73,8 +74,11 @@ app.use(
 );
 
 app.use((error, req, res, next) => {
-  console.log(error);
-  res.status(500).send("Error en el servidor");
+  ErrorHandler(error, req, res, next);
+  res.status(500).send({
+    status: "error",
+    message: "Error interno del servidor",
+  });
 });
 
 const httpServer = app.listen(PORT, () => {

@@ -7,8 +7,9 @@ const getUsers = async (req, res, next) => {
     const users = await usersService.getUsers();
     return res.send({ status: "success", payload: users });
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -29,8 +30,9 @@ const getUserBy = async (req, res, next) => {
         .send({ status: "error", message: "User not found" });
     return res.send({ status: "success", payload: user });
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -46,8 +48,9 @@ const createUser = async (req, res, next) => {
     const result = await usersService.createUser();
     return res.send({ status: "success", payload: result._id });
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -58,6 +61,7 @@ const createUser = async (req, res, next) => {
     }
   }
 };
+
 const updateUser = async (req, res, next) => {
   try {
     const { uid } = req.params;
@@ -69,8 +73,9 @@ const updateUser = async (req, res, next) => {
     const result = await usersService.updateUser(uid, req.body);
     return res.send({ status: "success", payload: result });
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -95,8 +100,9 @@ const deleteUser = async (req, res, next) => {
       message: "User deleted successfully",
     });
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;

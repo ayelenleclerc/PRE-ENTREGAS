@@ -2,7 +2,6 @@ import { generateProducts } from "../mocks/products.js";
 import { productsService } from "../services/index.js";
 import ErrorsDictionary from "../dictionaries/errors.js";
 import errorCodes from "../dictionaries/errorCodes.js";
-
 const paginateProducts = async (req, res, next) => {
   try {
     const products = await productsService.paginateProducts(
@@ -11,8 +10,9 @@ const paginateProducts = async (req, res, next) => {
     );
     return res.send({ status: "success", payload: products });
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -35,8 +35,9 @@ const getProductsBy = async (req, res, next) => {
       return res.status(400).json({ message: "Producto no encontrado" });
     }
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -63,8 +64,9 @@ const createProduct = async (req, res, next) => {
       return res.status(201).json({ message: "Product created", product });
     }
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -85,8 +87,9 @@ const updateProduct = async (req, res, next) => {
       return res.status(400).json({ message: "Error! product not updated" });
     }
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
@@ -111,8 +114,9 @@ const deleteProduct = async (req, res, next) => {
       return res.status(400).json({ message: "Error! Product not deleted" });
     }
   } catch (error) {
-    const knownError = ErrorsDictionary[error.name];
     const customError = new Error();
+    const knownError = ErrorsDictionary[error.name];
+
     if (knownError) {
       customError.name = knownError;
       customError.message = error.message;
