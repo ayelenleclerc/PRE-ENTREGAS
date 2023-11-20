@@ -19,6 +19,7 @@ import config from "./config/config.js";
 import initializePassportStrategies from "./config/passport.config.js";
 import ErrorHandler from "./middlewares/errorHandler.js";
 import { chatService } from "./services/index.js";
+import attachLogger from "./middlewares/attachLogger.js";
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use(express.static(`${__dirname}/public`));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(attachLogger);
 
 initializePassportStrategies();
 
@@ -54,6 +56,22 @@ app.use(
     },
   })
 );
+
+app.use((req, res, next) => {
+  logger.http(
+    `${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`
+  );
+  next();
+});
+
+app.use("/loggerTest", attachLogger, async (req, res, next) => {
+  logger.log("debug", "prueba logger");
+  logger.log("http", "prueba logger");
+  logger.log("info", "prueba logger");
+  logger.log("error", "prueba logger");
+  logger.log("fatal", "prueba logger");
+  res.sendStatus(200);
+});
 
 const swaggerOptions = {
   definition: {

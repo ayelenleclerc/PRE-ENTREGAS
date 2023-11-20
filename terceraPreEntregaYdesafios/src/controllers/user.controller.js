@@ -14,8 +14,10 @@ const getUsers = async (req, res, next) => {
       customError.name = knownError;
       customError.message = error.message;
       customError.code = errorCodes[knownError];
+      req.logger.error(`[${new Date().toISOString()}] Error: ${error.message}`);
       next(customError);
     } else {
+      req.logger.error(`[${new Date().toISOString()}] Error: ${error.message}`);
       next(error);
     }
   }
@@ -24,10 +26,14 @@ const getUserBy = async (req, res, next) => {
   try {
     const { uid } = req.params;
     const user = await usersService.getUserBy({ _id: uid });
-    if (!user)
+    if (!user) {
+      req.logger.warning(
+        `[${new Date().toISOString()}] Alerta: Usuario no encontrado`
+      );
       return res
         .status(404)
         .send({ status: "error", message: "User not found" });
+    }
     return res.send({ status: "success", payload: user });
   } catch (error) {
     const customError = new Error();
@@ -37,8 +43,10 @@ const getUserBy = async (req, res, next) => {
       customError.name = knownError;
       customError.message = error.message;
       customError.code = errorCodes[knownError];
+      req.logger.error(`[${new Date().toISOString()}] Error: ${error.message}`);
       next(customError);
     } else {
+      req.logger.error(`[${new Date().toISOString()}] Error: ${error.message}`);
       next(error);
     }
   }
@@ -46,6 +54,9 @@ const getUserBy = async (req, res, next) => {
 const createUser = async (req, res, next) => {
   try {
     const result = await usersService.createUser();
+    req.logger.info(
+      `[${new Date().toISOString()}] Usuario creado con id: ${result._id}`
+    );
     return res.send({ status: "success", payload: result._id });
   } catch (error) {
     const customError = new Error();
@@ -55,8 +66,10 @@ const createUser = async (req, res, next) => {
       customError.name = knownError;
       customError.message = error.message;
       customError.code = errorCodes[knownError];
+      req.logger.error(`[${new Date().toISOString()}] Error: ${error.message}`);
       next(customError);
     } else {
+      req.logger.error(`[${new Date().toISOString()}] Error: ${error.message}`);
       next(error);
     }
   }
@@ -66,10 +79,15 @@ const updateUser = async (req, res, next) => {
   try {
     const { uid } = req.params;
     const user = await usersService.getUserBy({ _id: uid });
-    if (!user)
+    if (!user) {
+      req.logger.warning(
+        `[${new Date().toISOString()}] Alerta: Usuario no encontrado`
+      );
       return res
         .status(404)
         .send({ status: "error", message: "User not found" });
+    }
+
     const result = await usersService.updateUser(uid, req.body);
     return res.send({ status: "success", payload: result });
   } catch (error) {
@@ -80,8 +98,10 @@ const updateUser = async (req, res, next) => {
       customError.name = knownError;
       customError.message = error.message;
       customError.code = errorCodes[knownError];
+      req.logger.error(`[${new Date().toISOString()}] Error: ${error.message}`);
       next(customError);
     } else {
+      req.logger.error(`[${new Date().toISOString()}] Error: ${error.message}`);
       next(error);
     }
   }
@@ -90,10 +110,14 @@ const deleteUser = async (req, res, next) => {
   try {
     const { uid } = req.params;
     const user = await usersService.getUserBy({ _id: uid });
-    if (!user)
+    if (!user) {
+      eq.logger.warning(
+        `[${new Date().toISOString()}] Alerta: Usuario no encontrado`
+      );
       return res
         .status(404)
         .send({ status: "error", message: "User not found" });
+    }
     await usersService.deleteUser(uid);
     return res.send({
       status: "success",
@@ -107,8 +131,10 @@ const deleteUser = async (req, res, next) => {
       customError.name = knownError;
       customError.message = error.message;
       customError.code = errorCodes[knownError];
+      req.logger.error(`[${new Date().toISOString()}] Error: ${error.message}`);
       next(customError);
     } else {
+      req.logger.error(`[${new Date().toISOString()}] Error: ${error.message}`);
       next(error);
     }
   }
