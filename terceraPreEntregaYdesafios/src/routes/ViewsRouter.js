@@ -1,70 +1,24 @@
 import BaseRouter from "./BaseRouter.js";
-import {
-  productsService,
-  cartsService,
-  ticketsService,
-} from "../services/index.js";
-
-import { getValidFilters } from "../utils.js";
-
+import viewsController from "../controllers/views.controller.js";
 class ViewsRouter extends BaseRouter {
   init() {
-    this.get("/register", ["NO_AUTH"], async (req, res) => {
-      return res.render("register");
-    });
+    this.get("/register", ["NO_AUTH"], viewsController.register);
 
-    this.get("/login", ["NO_AUTH"], async (req, res) => {
-      return res.render("login");
-    });
+    this.get("/login", ["NO_AUTH"], viewsController.login);
 
-    this.get("/profile", ["AUTH"], async (req, res) => {
-      return res.render("profile");
-    });
+    this.get("/profile", ["AUTH"], viewsController.profile);
     this.get("/", ["PUBLIC"], async (req, res) => {
       return res.render("home");
     });
 
-    this.get("/products", ["PUBLIC"], async (req, res) => {
-      let { page = 1, limit = 5, sort, order = 1, ...filters } = req.query;
-      const cleanFilters = getValidFilters(filters, "product");
+    this.get("/products", ["PUBLIC"], viewsController.products);
 
-      let sortResult = {};
-      if (sort) {
-        sortResult[sort] = order;
-      }
-      const pagination = await productsService.paginateProducts(cleanFilters, {
-        page,
-        lean: true,
-        limit,
-        sort: sortResult,
-      });
+    // this.get("/realTimeProducts", ["ADMIN"],viewsController.realTimeProducts);
 
-      return res.render("productos", {
-        products: pagination.docs,
-        hasNextPage: pagination.hasNextPage,
-        hasPrevPage: pagination.hasPrevPage,
-        nextPage: pagination.nextPage,
-        prevPage: pagination.prevPage,
-        page: pagination.page,
-      });
-    });
+    this.get("/chat", ["PUBLIC"], viewsController.chat);
 
-    // this.get("/realTimeProducts", ["ADMIN"], async (req, res) => {
-    //   const listaProductos = await productsService.getProducts();
-    //   return res.render("realTimeProducts", { listaProductos });
-    // });
-    this.get("/chat", ["PUBLIC"], async (req, res) => {
-      return res.render("chat");
-    });
-
-    this.get("/cart", ["AUTH"], async (req, res) => {
-      const cart = await cartsService.getCartById(req.user._id);
-      return res.render("cart", { cart });
-    });
-    this.get("/purchase", ["AUTH"], async (req, res) => {
-      const ticket = await ticketsService.getTicketsBy(req.user.cart._id);
-      return res.render("purchase", { ticket });
-    });
+    this.get("/cart", ["AUTH"], viewsController.cart);
+    this.get("/purchase", ["AUTH"], viewsController.purchase);
   }
 }
 

@@ -14,7 +14,7 @@ export default {
   },
   gmail: {
     USER: process.env.GMAIL_USER,
-    PASS: process.env.GMAIL_PASS,
+    PASS: process.env.GMAIL_PASSWORD,
   },
   github: {
     CLIENT_ID: process.env.GITHUB_CLIENT_ID,
