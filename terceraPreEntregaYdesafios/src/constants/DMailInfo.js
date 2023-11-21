@@ -11,4 +11,24 @@ export default {
       },
     ],
   },
+  passwordrestore: {
+    subject: "Restablecimiento de  contraseña",
+    attachments: [
+      {
+        filename: "gmail.jpg",
+        path: `${__dirname}/public/img/gmail.jpg`,
+        cid: "gmail",
+      },
+    ],
+  },
+  order: {
+    subject: "Tu pedido ha sido procesado",
+    attachments: [
+      {
+        filename: "gmail.jpg",
+        path: `${__dirname}/public/img/gmail.jpg`,
+        cid: "gmail",
+      },
+    ],
+  },
 };

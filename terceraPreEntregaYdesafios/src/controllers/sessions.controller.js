@@ -4,6 +4,7 @@ import MailerService from "../services/MailerService.js";
 import TwilioService from "../services/TwilioService.js";
 import ErrorsDictionary from "../dictionary/errors.js";
 import errorCodes from "../dictionary/errorCodes.js";
+import { usersService } from "../services/index.js";
 
 import config from "../config/config.js";
 import DMailTemplates from "../constants/DMailTemplates.js";
@@ -200,6 +201,20 @@ const loginJWT = async (req, res) => {
   return res.sendSuccess("Logged In", token);
 };
 
+const passwordRestoreRequest = async (req, res) => {
+  const { email } = req.body;
+  const user = await usersService.getUserBy({ email });
+  if (!user) return res.sendBadRequest("User doesn't exist ");
+  const mailerService = new MailerService();
+  const result = await mailerService.sendMail(
+    [email],
+    DMailTemplates.PASSWORD_RESTORE,
+    {}
+  );
+
+  res.sendSuccess("Email sent");
+};
+
 export default {
   register,
   login,
@@ -210,4 +225,5 @@ export default {
   mailing,
   twilio,
   loginJWT,
+  passwordRestoreRequest,
 };

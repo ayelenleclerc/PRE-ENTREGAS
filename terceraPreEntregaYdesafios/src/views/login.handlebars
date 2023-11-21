@@ -1,13 +1,23 @@
 <h1 class="title">Ingresa</h1>
+<div class="container">
 
-<form class="formProducts" id="loginForm">
-  <label class="label">Email</label>
-  <input class="controls" name="email" />
+  <form class="formProducts" id="loginForm">
+    <label class="label">Email</label>
+    <input class="controls" name="email" />
 
-  <label class="label">Contraseña</label>
-  <input class="controls" name="password" />
+    <label class="label">Contraseña</label>
+    <input class="controls" name="password" />
 
-  <input class="btn btn-success" type="submit" />
-</form>
+    <input class="btn btn-success" type="submit" />
+  </form>
+</div>
+<div class="btnContainer">
+
+  <p>¿Olvidaste tu contraseña? Puedes reestablecerla<button
+      class="btn btn-danger"
+      onclick="restorePassword()"
+    >aquí</button></p>
+
+</div>
 
 <script src="/js/login.js"></script>

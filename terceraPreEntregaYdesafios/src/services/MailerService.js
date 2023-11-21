@@ -3,7 +3,7 @@ import Handlebars from "handlebars";
 import fs from "fs";
 import config from "../config/config.js";
 import DMailInfo from "../constants/DMailInfo.js";
-
+import __dirname from "../utils.js";
 export default class MailerService {
   constructor() {
     this.client = nodemailer.createTransport({

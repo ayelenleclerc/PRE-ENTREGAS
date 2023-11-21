@@ -76,6 +76,12 @@ class SessionsRouter extends BaseRouter {
     this.get("/mails", ["AUTH"], sessionsController.mailing);
 
     this.get("/twilio", ["AUTH"], sessionsController.twilio);
+
+    this.post(
+      "/passwordRestoreRequest",
+      ["PUBLIC"],
+      sessionsController.passwordRestoreRequest
+    );
   }
 }
 
