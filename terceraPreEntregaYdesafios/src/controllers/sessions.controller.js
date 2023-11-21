@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import __dirname__ from "../utils.js";
-import MailerService from "../services/MailingService.js";
+import MailerService from "../services/MailerService.js";
 import TwilioService from "../services/TwilioService.js";
 import ErrorsDictionary from "../dictionary/errors.js";
 import errorCodes from "../dictionary/errorCodes.js";
@@ -121,8 +121,9 @@ const applyGoogleCallback = async (req, res) => {
 
 const mailing = async (req, res) => {
   try {
-    const mailerService = new MailerService();
-    const result = await mailerService.sendMail(
+    //Enviar un correo de bienvenida
+    const mailService = new MailerService();
+    const result = await mailService.sendMail(
       [req.user.email],
       DMailTemplates.WELCOME,
       { user: req.user }
