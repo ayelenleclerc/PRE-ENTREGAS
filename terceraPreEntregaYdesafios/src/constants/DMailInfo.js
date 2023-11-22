@@ -21,14 +21,4 @@ export default {
       },
     ],
   },
-  order: {
-    subject: "Tu pedido ha sido procesado",
-    attachments: [
-      {
-        filename: "gmail.jpg",
-        path: `${__dirname}/public/img/gmail.jpg`,
-        cid: "gmail",
-      },
-    ],
-  },
 };

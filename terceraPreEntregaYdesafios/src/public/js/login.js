@@ -39,8 +39,8 @@ async function restorePassword() {
           },
         });
         Swal.fire({
-          status: "success",
-          text: "Se ha enviado un email para restablecer tu contraseña",
+          icon: "success",
+          text: "Si el email existe en nuestra base de datos, te hemos enviado un email para restablecer tu contraseña",
         });
       }
     } catch (error) {

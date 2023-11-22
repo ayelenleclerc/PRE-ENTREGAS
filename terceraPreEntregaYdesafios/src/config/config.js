@@ -12,7 +12,7 @@ export default {
     COOKIE: process.env.JWT_COOKIE,
     SECRET: process.env.JWT_SECRET,
   },
-  gmail: {
+  mailer: {
     USER: process.env.GMAIL_USER,
     PASS: process.env.GMAIL_PASSWORD,
   },

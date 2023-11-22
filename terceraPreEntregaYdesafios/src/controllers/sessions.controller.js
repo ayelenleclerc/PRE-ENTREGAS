@@ -5,6 +5,7 @@ import TwilioService from "../services/TwilioService.js";
 import ErrorsDictionary from "../dictionary/errors.js";
 import errorCodes from "../dictionary/errorCodes.js";
 import { usersService } from "../services/index.js";
+import authService from "../services/authService.js";
 
 import config from "../config/config.js";
 import DMailTemplates from "../constants/DMailTemplates.js";
@@ -205,14 +206,42 @@ const passwordRestoreRequest = async (req, res) => {
   const { email } = req.body;
   const user = await usersService.getUserBy({ email });
   if (!user) return res.sendBadRequest("User doesn't exist ");
+  const token = jwt.sign({ email }, config.jwt.SECRET, {
+    expiresIn: "1d",
+  });
   const mailerService = new MailerService();
   const result = await mailerService.sendMail(
     [email],
-    DMailTemplates.PASSWORD_RESTORE,
-    {}
+    DMailTemplates.PWD_RESTORE,
+    { token }
   );
-
   res.sendSuccess("Email sent");
+};
+
+const restorePassword = async (req, res) => {
+  const { newPassword, token } = req.body;
+  if (!newPassword || !token) return res.sendBadRequest("Incomplete values");
+  try {
+    //El token es válido?
+    const { email } = jwt.verify(token, config.jwt.SECRET);
+    //El usuario sí está en la base?
+    const user = await usersService.getUserBy({ email });
+    if (!user) return res.sendBadRequest("User doesn't exist");
+    //¿No será la misma contraseña que ya tiene?
+    const isSamePassword = await authService.validatePassword(
+      newPassword,
+      user.password
+    );
+    if (isSamePassword)
+      return res.sendBadRequest("New Password Cannot be equal to Old Password");
+    //Hashear mi nuevo password
+    const hashNewPassword = await authService.createHash(newPassword);
+    await usersService.updateUser(user._id, { password: hashNewPassword });
+    res.sendSuccess();
+  } catch (error) {
+    console.log(error);
+    res.sendBadRequest("Invalid token");
+  }
 };
 
 export default {
@@ -226,4 +255,5 @@ export default {
   twilio,
   loginJWT,
   passwordRestoreRequest,
+  restorePassword,
 };

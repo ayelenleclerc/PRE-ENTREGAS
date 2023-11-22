@@ -10,8 +10,8 @@ export default class MailerService {
       service: "gmail",
       port: 587,
       auth: {
-        user: config.gmail.USER,
-        pass: config.gmail.PASS,
+        user: config.mailer.USER,
+        pass: config.mailer.PASS,
       },
     });
   }
@@ -20,7 +20,7 @@ export default class MailerService {
     const mailInfo = DMailInfo[template];
     const html = await this.generateMailTemplate(template, payload);
     const result = await this.client.sendMail({
-      from: `La Tienda <${config.gmail.USER}>`,
+      from: `La Tienda <${config.mailer.USER}>`,
       to: emails,
       ...mailInfo,
     });

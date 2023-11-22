@@ -178,12 +178,12 @@ const initializePassportStrategies = () => {
       }
     )
   );
-  // passport.serializeUser((user, done) => {
-  //   done(null, user._id);
-  // });
-  // passport.deserializeUser((user, done) => {
-  //   done(null, user);
-  // });
+  passport.serializeUser((user, done) => {
+    done(null, user._id);
+  });
+  passport.deserializeUser((user, done) => {
+    done(null, user);
+  });
 };
 
 export default initializePassportStrategies;

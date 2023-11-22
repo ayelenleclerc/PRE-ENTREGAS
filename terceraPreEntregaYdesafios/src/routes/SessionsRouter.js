@@ -82,6 +82,11 @@ class SessionsRouter extends BaseRouter {
       ["PUBLIC"],
       sessionsController.passwordRestoreRequest
     );
+    this.put(
+      "/password-restore",
+      ["PUBLIC"],
+      sessionsController.restorePassword
+    );
   }
 }
 
