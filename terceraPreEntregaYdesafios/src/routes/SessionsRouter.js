@@ -1,14 +1,12 @@
 import sessionsController from "../controllers/sessions.controller.js";
 import BaseRouter from "./BaseRouter.js";
 import passportCall from "../middlewares/passportCall.js";
-import { validateJWT } from "../middlewares/jwtExtractor.js";
-import authService from "../services/authService.js";
 
 class SessionsRouter extends BaseRouter {
   init() {
     this.post(
       "/register",
-      ["NO_AUTH"],
+      ["PUBLIC"],
       passportCall(
         "register",
         { strategyType: "LOCALS" },
@@ -17,7 +15,7 @@ class SessionsRouter extends BaseRouter {
     );
     this.post(
       "/login",
-      ["NO_AUTH"],
+      ["PUBLIC"],
       passportCall(
         "login",
         { strategyType: "LOCALS" },

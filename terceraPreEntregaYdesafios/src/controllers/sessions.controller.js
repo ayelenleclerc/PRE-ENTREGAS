@@ -6,9 +6,8 @@ import ErrorsDictionary from "../dictionary/errors.js";
 import errorCodes from "../dictionary/errorCodes.js";
 import { usersService } from "../services/index.js";
 import authService from "../services/authService.js";
-
+import UserDto from "../dto/UserDto.js";
 import config from "../config/config.js";
-import DMailTemplates from "../constants/DMailTemplates.js";
 
 const register = async (req, res) => {
   try {
@@ -38,13 +37,7 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
-  const tokenizedUser = {
-    name: `${req.user.firstName} ${req.user.lastName}`,
-    id: req.user._id,
-    role: req.user.role,
-    cart: req.user.cart,
-    email: req.user.email,
-  };
+  const tokenizedUser = UserDto.getTokenFromUser(req.user);
   const token = jwt.sign(tokenizedUser, config.jwt.SECRET, {
     expiresIn: "1d",
   });
@@ -66,14 +59,7 @@ const applyGithubCallback = async (req, res) => {
   try {
     const { firstName, lastName, _id, role, cart, email } = req.user;
 
-    const tokenizedUser = {
-      name: `${firstName} ${lastName}`,
-      id: _id,
-      role: role,
-      cart: cart,
-      email: email,
-    };
-
+    const tokenizedUser = UserDto.getTokenFromUser(req.user);
     const token = jwt.sign(tokenizedUser, config.jwt.SECRET, {
       expiresIn: "1d",
     });
@@ -97,13 +83,7 @@ const applyGithubCallback = async (req, res) => {
 const applyGoogleCallback = async (req, res) => {
   try {
     const { firstName, lastName, _id, role, cart, email } = req.user;
-    const tokenizedUser = {
-      name: `${firstName} ${lastName}`,
-      id: _id,
-      role: role,
-      cart: cart,
-      email: email,
-    };
+    const tokenizedUser = UserDto.getTokenFromUser(req.user);
     const token = jwt.sign(tokenizedUser, config.jwt.SECRET, {
       expiresIn: "1d",
     });

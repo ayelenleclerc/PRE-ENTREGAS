@@ -12,6 +12,9 @@ const register = async (req, res) => {
 };
 
 const login = async (req, res) => {
+  if (req.user) {
+    return res.redirect("/profile");
+  }
   return res.render("login");
 };
 
