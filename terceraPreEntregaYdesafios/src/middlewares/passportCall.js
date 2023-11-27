@@ -1,18 +1,15 @@
 import passport from "passport";
-
 const passportCall = (strategy, options = {}) => {
   return (req, res, next) => {
     passport.authenticate(strategy, options, async (error, user, info) => {
       if (error) {
         return next(error);
       }
-
       if (!options.strategyType) {
         return res
           .status(500)
           .send("Internal Server Error: strategyType not defined");
       }
-
       if (!user) {
         handleUnauthenticatedUser(req, res, next, options.strategyType, info);
       } else {
@@ -22,7 +19,6 @@ const passportCall = (strategy, options = {}) => {
     })(req, res, next);
   };
 };
-
 const handleUnauthenticatedUser = (req, res, next, strategyType, info) => {
   switch (strategyType) {
     case "LOCALS":

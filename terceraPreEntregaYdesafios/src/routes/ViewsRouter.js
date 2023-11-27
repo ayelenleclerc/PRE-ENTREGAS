@@ -15,7 +15,7 @@ class ViewsRouter extends BaseRouter {
 
     // this.get("/realTimeProducts", ["ADMIN"],viewsController.realTimeProducts);
 
-    this.get("/chat", ["PUBLIC"], viewsController.chat);
+    this.get("/chat", ["AUTH"], viewsController.chat);
 
     this.get("/cart", ["AUTH"], viewsController.cart);
     this.get("/purchase", ["AUTH"], viewsController.purchase);

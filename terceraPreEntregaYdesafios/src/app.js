@@ -61,18 +61,18 @@ app.use(
 );
 
 app.use((req, res, next) => {
-  logger.http(
+  req.logger.http(
     `${req.method} en ${req.url} - ${new Date().toLocaleTimeString()}`
   );
   next();
 });
 
 app.use("/loggerTest", attachLogger, async (req, res, next) => {
-  logger.log("debug", "prueba logger");
-  logger.log("http", "prueba logger");
-  logger.log("info", "prueba logger");
-  logger.log("error", "prueba logger");
-  logger.log("fatal", "prueba logger");
+  req.logger.log("debug", "prueba logger");
+  req.logger.log("http", "prueba logger");
+  req.logger.log("info", "prueba logger");
+  req.logger.log("error", "prueba logger");
+  req.logger.log("fatal", "prueba logger");
   res.sendStatus(200);
 });
 
