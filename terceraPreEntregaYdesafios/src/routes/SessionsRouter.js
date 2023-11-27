@@ -1,10 +1,7 @@
-import sessionsController from "../controllers/sessions.controller.js";
-import BaseRouter from "./BaseRouter.js";
-<<<<<<< HEAD
-import config from "../config/config.js";
-=======
+import jwt from "jsonwebtoken";
 import passportCall from "../middlewares/passportCall.js";
->>>>>>> 233066b2ca93f4f6fd10eb0d23bb50410cba7be6
+import BaseRouter from "./BaseRouter.js";
+import config from "../config/config.js";
 
 import __dirname__ from "../utils.js";
 import MailerService from "../services/MailerService.js";
@@ -18,25 +15,41 @@ class SessionsRouter extends BaseRouter {
   init() {
     this.post(
       "/register",
-      ["PUBLIC"],
-      passportCall(
-        "register",
-        { strategyType: "LOCALS" },
-        sessionsController.register
-      )
+      ["NO_AUTH"],
+      passportCall("register", { strategyType: "LOCALS" }),
+      async (req, res) => {
+        res.clearCookie("cart");
+        return res.sendSuccess("Registered");
+      }
     );
     this.post(
       "/login",
-      ["PUBLIC"],
-      passportCall(
-        "login",
-        { strategyType: "LOCALS" },
-        sessionsController.login
-      )
+      ["NO_AUTH"],
+      passportCall("login", { strategyType: "LOCALS" }),
+      async (req, res) => {
+        const tokenizedUser = {
+          name: `${req.user.firstName} ${req.user.lastName}`,
+          id: req.user._id,
+          role: req.user.role,
+          cart: req.user.cart,
+          email: req.user.email,
+        };
+        const token = jwt.sign(tokenizedUser, config.jwt.SECRET, {
+          expiresIn: "1d",
+        });
+        res.cookie(config.jwt.COOKIE, token);
+        res.clearCookie("cart");
+        return res.sendSuccess("Logged In");
+      }
     );
-    this.get("/logout", ["AUTH"], sessionsController.logout);
+    this.get("/logout", ["AUTH"], async (req, res) => {
+      res.clearCookie(config.jwt.COOKIE);
+      return res.sendSuccess("Logged Out");
+    });
 
-    this.get("/current", ["AUTH"], sessionsController.current);
+    this.get("/current", ["AUTH"], async (req, res) => {
+      return res.sendSuccessWithPayload(req.user);
+    });
 
     this.get(
       "/github",
@@ -48,7 +61,6 @@ class SessionsRouter extends BaseRouter {
       "/githubcallback",
       ["NO_AUTH"],
       passportCall("github", { strategyType: "GITHUB" }),
-<<<<<<< HEAD
       async (req, res) => {
         try {
           const { firstName, lastName, _id, role, cart, email } = req.user;
@@ -78,9 +90,6 @@ class SessionsRouter extends BaseRouter {
           return res.sendError("An error occurred during login");
         }
       }
-=======
-      sessionsController.applyGithubCallback
->>>>>>> 233066b2ca93f4f6fd10eb0d23bb50410cba7be6
     );
     this.get(
       "/google",
@@ -95,7 +104,6 @@ class SessionsRouter extends BaseRouter {
     this.get(
       "/googlecallback",
       ["NO_AUTH"],
-<<<<<<< HEAD
       passportCall("google", { strategyType: "OAUTH" }, async (req, res) => {
         try {
           const { firstName, lastName, _id, role, cart, email } = req.user;
@@ -122,13 +130,6 @@ class SessionsRouter extends BaseRouter {
           return res.sendError("An error occurred during login");
         }
       })
-=======
-      passportCall(
-        "google",
-        { strategyType: "OAUTH" },
-        sessionsController.applyGoogleCallback
-      )
->>>>>>> 233066b2ca93f4f6fd10eb0d23bb50410cba7be6
     );
 
     // this.post("/loginJWT", validateJWT,sessionsController.loginJWT);
@@ -143,7 +144,6 @@ class SessionsRouter extends BaseRouter {
       );
       res.status(401).send({ status: "error" });
     });
-<<<<<<< HEAD
 
     this.get("/mails", ["AUTH"], async (req, res) => {
       try {
@@ -233,23 +233,6 @@ class SessionsRouter extends BaseRouter {
         res.sendBadRequest("Invalid token");
       }
     });
-=======
-
-    this.get("/mails", ["AUTH"], sessionsController.mailing);
-
-    this.get("/twilio", ["AUTH"], sessionsController.twilio);
-
-    this.post(
-      "/passwordRestoreRequest",
-      ["PUBLIC"],
-      sessionsController.passwordRestoreRequest
-    );
-    this.put(
-      "/password-restore",
-      ["PUBLIC"],
-      sessionsController.restorePassword
-    );
->>>>>>> 233066b2ca93f4f6fd10eb0d23bb50410cba7be6
   }
 }
 
