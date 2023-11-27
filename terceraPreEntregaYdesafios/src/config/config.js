@@ -1,3 +1,17 @@
+// import dotenv from "dotenv";
+// import { Command } from "commander";
+
+// const program = new Command();
+// program
+//   .option("-m, --mode <mode>", "Modo de trabajo", "production")
+//   .option("-p <port>", "Puerto del servidor", 8080);
+
+// program.parse();
+
+// dotenv.config({
+//   path: program.opts().mode === "dev" ? "./.env.dev" : "./.env.prod",
+// });
+
 export default {
   app: {
     PORT: process.env.PORT || 8080,
@@ -12,9 +26,9 @@ export default {
     COOKIE: process.env.JWT_COOKIE,
     SECRET: process.env.JWT_SECRET,
   },
-  gmail: {
+  mailer: {
     USER: process.env.GMAIL_USER,
-    PASS: process.env.GMAIL_PASS,
+    PASS: process.env.GMAIL_PASSWORD,
   },
   github: {
     CLIENT_ID: process.env.GITHUB_CLIENT_ID,
