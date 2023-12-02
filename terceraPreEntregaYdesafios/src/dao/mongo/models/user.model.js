@@ -9,6 +9,7 @@ const schema = new mongoose.Schema({
   password: String,
   role: {
     type: String,
+    enum: ["admin", "user", "premium"],
     default: "user",
   },
   cart: {
@@ -17,8 +18,8 @@ const schema = new mongoose.Schema({
   },
   active: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 });
 
 const userModel = mongoose.model(collection, schema);

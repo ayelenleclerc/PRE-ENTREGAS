@@ -107,8 +107,8 @@ const initializePassportStrategies = () => {
     "github",
     new GitHubStrategy(
       {
-        clientID: "Iv1.4137e4f2dd3e6616",
-        clientSecret: "353ae059b1ff420033c685f1ab84e3c1a90ff3cc",
+        clientID: config.github.CLIENT_ID,
+        clientSecret: config.github.CLIENT_SECRET,
         callbackURL: "http://localhost:8080/api/sessions/githubcallback",
       },
       async (accessToken, refreshToken, profile, done) => {
@@ -141,9 +141,8 @@ const initializePassportStrategies = () => {
     "google",
     new GoogleStrategy(
       {
-        clientID:
-          "831041375496-j26tjm40jogcosvclgge9shbc7ksbmd5.apps.googleusercontent.com",
-        clientSecret: "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",
+        clientID: config.google.CLIENT_ID,
+        clientSecret: config.google.CLIENT_SECRET,
         callbackURL: "http://localhost:8080/api/sessions/googlecallback",
         passReqToCallback: true,
       },
@@ -174,12 +173,12 @@ const initializePassportStrategies = () => {
       }
     )
   );
-  // passport.serializeUser((user, done) => {
-  //   done(null, user._id);
-  // });
-  // passport.deserializeUser((user, done) => {
-  //   done(null, user);
-  // });
+  passport.serializeUser((user, done) => {
+    done(null, user._id);
+  });
+  passport.deserializeUser((user, done) => {
+    done(null, user);
+  });
 };
 
 export default initializePassportStrategies;

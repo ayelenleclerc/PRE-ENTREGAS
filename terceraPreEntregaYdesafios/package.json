@@ -8,7 +8,9 @@
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "express-compression": "^1.0.2",
     "express-handlebars": "^7.1.2",
+    "handlebars": "^4.7.8",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^7.4.5",
     "mongoose-paginate-v2": "^1.7.4",
@@ -20,6 +22,9 @@
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
     "socket.io": "^4.7.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
+    "twilio": "^4.19.0",
     "winston": "^3.11.0"
   },
   "description": "",
@@ -28,10 +33,13 @@
   "main": "index.js",
   "name": "tercera-pre-entrega",
   "scripts": {
-    "dev": "nodemon src/app.js --mode dev",
+    "dev": "nodemon src/app.js",
     "start": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
-  "version": "1.0.0"
+  "version": "1.0.0",
+  "devDependencies": {
+    "mocha": "^10.2.0"
+  }
 }
