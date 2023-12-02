@@ -126,8 +126,5 @@ export default {
   cart,
   purchase,
   passwordRestore,
-<<<<<<< HEAD
   restorePassword,
-=======
->>>>>>> 233066b2ca93f4f6fd10eb0d23bb50410cba7be6
 };
